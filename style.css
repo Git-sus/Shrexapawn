@@ -1,0 +1,17 @@
+main{
+    display: grid;
+    grid-template-columns: 10vw 10vw 10vw;
+    
+}
+
+div{
+    width: 10vw;
+    height: 10vw;
+    font-size: 10vw;
+    border: 1px solid black;
+}
+
+div:nth-child(odd){
+    background-color: black;
+    color: white;
+}
