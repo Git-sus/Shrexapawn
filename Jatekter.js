@@ -22,34 +22,42 @@ export class Jatekter{
 
     jatekosLep(){
         $(window).on("elemValaszt",event =>{
+            console.log(this.ellenorzes(1));
             console.log(this.mezoListaToString());
             if(this.#kor%2){
-                if(ellenorzes()){
-                    if(this.#kattintottMezo===null)
-                        this.#kattintottMezo=event.detail
-                    else{
-                        if(this.#kattintottMezo.LegalisLepes(event.detail) || this.#kattintottMezo.LegalisTamadas(event.detail)){
-                            this.#kattintottMezo.csere(event.detail)
-                            this.#kor++
-                            this.gepLep()
-                        }
-                        this.#kattintottMezo=null
-                    }
-                }
+                if(this.#kattintottMezo===null)
+                    this.#kattintottMezo=event.detail
                 else{
-                    console.log("vesztettél");
+                    if(this.#kattintottMezo.LegalisLepes(event.detail) || this.#kattintottMezo.LegalisTamadas(event.detail)){
+                        this.#kattintottMezo.csere(event.detail)
+                        this.#kor++
+                        if(this.ellenorzes(1))
+                            this.gepLep()
+                        else{
+                            console.log("nyertél");
+                        }
+                    }
+                    this.#kattintottMezo=null
                 }
             }
         })  
     }
     gepLep(){
         setTimeout(() => {
-            console.log("geplep");
-            this.#kor++
-        }, 2000);
+            if(this.ellenorzes(-1)){
+                console.log("geplep");
+                this.#kor++
+            }else{
+                console.log("vesztettél");
+            }
+        }, 1000);
     }
-
-    ellenorzes(){
-        //tdod
+    
+    ellenorzes(jatekos){
+        let ix=0
+        while(ix<3 && this.#mezoLista[(jatekos==1?0:6)+ix].babu!=jatekos)
+            ix++
+        
+        return ix>=3
     }
 }
