@@ -11,7 +11,7 @@ class GyufasDoboz
 
     osszehasonlit(allas)
     {
-        this.#allas === allas;
+        return this.#allas == allas;
     }
 }
 

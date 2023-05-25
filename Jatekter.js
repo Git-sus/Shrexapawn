@@ -1,4 +1,4 @@
-import GyufasDoboz from "./GyufasDoboz";
+import GyufasDoboz from "./GyufasDoboz.js";
 import { Mezo } from "/Mezo.js";
 
 /*
