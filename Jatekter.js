@@ -391,6 +391,13 @@ export class Jatekter{
         while(ix<3 && this.#mezoLista[(jatekos==1?0:6)+ix].babu!=jatekos)
             ix++
         
-        return ix>=3
+        if(ix>=3)
+            return true
+        
+        ix=0
+        while(ix<this.#mezoLista.length && jatekos!=this.#mezoLista[ix].babu)
+            ix++        
+        console.log(ix);
+        return ix>=this.#mezoLista.length
     }
 }
