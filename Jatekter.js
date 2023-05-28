@@ -28,7 +28,7 @@ export class Jatekter{
        
         //2. indexű lépések
 
-        this.#gyufasDobozok.push(
+        this.#gyufasDobozok.push([
             new GyufasDoboz([
                 -1, -1, -1,
                  1,  0,  0,
@@ -36,7 +36,7 @@ export class Jatekter{
             ], [
                 [1, 3],
                 [1, 4],
-                [3, 5]
+                [2, 5]
             ]),
             new GyufasDoboz([
                 -1, -1, -1,
@@ -57,11 +57,11 @@ export class Jatekter{
                 [2, 4],
                 [2, 5]
             ])
-        );
+        ]);
 
         //4. indexű lépések
         
-        this.#gyufasDobozok.push(
+        this.#gyufasDobozok.push([
             new GyufasDoboz([
                 -1,  0, -1,
                 -1,  1,  0,
@@ -234,11 +234,11 @@ export class Jatekter{
             ], [
                 [0, 3]
             ])
-        );
+        ]);
 
         //6. indexű lépések
 
-        this.#gyufasDobozok.push(
+        this.#gyufasDobozok.push([
             new GyufasDoboz([
                  0,  0, -1,
                 -1, -1,  1,
@@ -342,8 +342,16 @@ export class Jatekter{
             ], [
                 [2, 4],
                 [5, 8]
-            ])
-        );
+            ]),
+            new GyufasDoboz([
+                0,  0, -1,
+                1,  -1, -1,
+                0,  0,  0
+           ], [
+               [4, 7],
+               [5, 8]
+           ])
+        ]);
     }
         mezoListaToString() {
             let tmp=""
@@ -355,7 +363,7 @@ export class Jatekter{
 
         jatekosLep(){
             $(window).on("elemValaszt",event =>{
-            console.log(this.ellenorzes(1));
+            //console.log(this.ellenorzes(1));
             //console.log(this.mezoListaToString());
             if(this.#kor%2){
                 if(this.#kattintottMezo===null)
@@ -367,7 +375,7 @@ export class Jatekter{
                         if(this.ellenorzes(1))
                             this.gepLep()
                         else{
-                            console.log("nyertél");
+                            console.warn("nyertél");
                         }
                     }
                     this.#kattintottMezo=null
@@ -377,11 +385,19 @@ export class Jatekter{
     }
     gepLep(){
         setTimeout(() => {
-            if(this.ellenorzes(-1)){
+            let allas=this.mezoListaToString()
+                let ix=0
+                while(allas!=this.#gyufasDobozok[this.#kor/2-1][ix].allas.join(""))
+                    ix++
+                let rndLepes=Math.floor(Math.random()*this.#gyufasDobozok[this.#kor/2-1][ix].lepesek.length)
                 console.log("geplep");
+                console.log(rndLepes);
+                this.#mezoLista[this.#gyufasDobozok[this.#kor/2-1][ix].lepesek[rndLepes][0]].csere(this.#mezoLista[this.#gyufasDobozok[this.#kor/2-1][ix].lepesek[rndLepes][1]])
+
+            if(this.ellenorzes(-1)){
                 this.#kor++
             }else{
-                console.log("vesztettél");
+                console.error("vesztettél");
             }
         }, 1000);
     }
@@ -397,10 +413,27 @@ export class Jatekter{
         ix=0
         while(ix<this.#mezoLista.length && -jatekos!=this.#mezoLista[ix].babu)
             ix++        
-        console.log(ix);
+        //console.log(ix);
         if(ix>=this.#mezoLista.length)
             return false
+        
         ix=0
-            return true
+        while(ix<this.#mezoLista.length-3 && 
+            !(//this.#mezoLista[(jatekos==1?3:0)+ix].babu!=jatekos ||
+            (this.#mezoLista[(jatekos==1?0:3)+ix].LegalisLepes(this.#mezoLista[((jatekos==1?0:3)+ix) + 3 * jatekos ])) ||
+            this.#mezoLista[(jatekos==1?0:3)+ix].LegalisTamadas(this.#mezoLista[((jatekos==1?0:3)+ix) + 3 * jatekos +1]) ||
+            (this.#mezoLista[(jatekos==1?0:3)+ix].LegalisTamadas(this.#mezoLista[((jatekos==1?0:3)+ix) + 3 * jatekos -1]))
+            )){
+                //console.log("azonos babu "+(this.#mezoLista[(jatekos==1?3:0)+ix].babu!=jatekos));
+                console.log("legal lepes "+ (this.#mezoLista[(jatekos==1?0:3)+ix].LegalisLepes(this.#mezoLista[((jatekos==1?0:3)+ix) + 3 * jatekos ])));
+                console.log("jobb tam "+this.#mezoLista[(jatekos==1?0:3)+ix].LegalisTamadas(this.#mezoLista[((jatekos==1?0:3)+ix) + 3 * jatekos +1]))
+                console.log("bal tam "+ (this.#mezoLista[(jatekos==1?0:3)+ix].LegalisTamadas(this.#mezoLista[((jatekos==1?0:3)+ix) + 3 * jatekos -1])));
+                console.log(this.#mezoLista[(jatekos==1?0:3)+ix]);
+                console.log("🐱🔫");
+                console.log();
+                ix++
+            }
+        console.log("utolso ix: "+ix);
+        return ix<this.#mezoLista.length-3
     }
 }

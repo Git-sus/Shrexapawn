@@ -13,6 +13,10 @@ class GyufasDoboz
     {
         return this.#allas == allas;
     }
+
+    get lepesek(){
+        return this.#lepesek
+    }
 }
 
 export default GyufasDoboz;
