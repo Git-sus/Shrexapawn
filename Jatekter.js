@@ -372,7 +372,7 @@ export class Jatekter{
             }
             this.#kattintottMezo=null
             this.#gepLepesei=[]
-            console.log(this.#gyufasDobozok);
+            // console.log(this.#gyufasDobozok);
         }
 
         mezoListaToString() {
@@ -398,8 +398,8 @@ export class Jatekter{
                             this.gepLep()
                         else{
                             console.warn("nyertél");
-                            console.log(this.#gepLepesei);
-                            console.log(this.#gyufasDobozok[this.#gepLepesei.length-1][this.#gepLepesei[this.#gepLepesei.length-1][0]].lepesek)
+                            //console.log(this.#gepLepesei);
+                            //console.log(this.#gyufasDobozok[this.#gepLepesei.length-1][this.#gepLepesei[this.#gepLepesei.length-1][0]].lepesek)
                             this.#gyufasDobozok[this.#gepLepesei.length-1][this.#gepLepesei[this.#gepLepesei.length-1][0]].lepesek.splice(this.#gepLepesei[this.#gepLepesei.length-1][1],1)
                             this.#jatekosNyer++
                             this.general()
