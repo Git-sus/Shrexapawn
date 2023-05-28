@@ -356,7 +356,7 @@ export class Jatekter{
         jatekosLep(){
             $(window).on("elemValaszt",event =>{
             console.log(this.ellenorzes(1));
-            console.log(this.mezoListaToString());
+            //console.log(this.mezoListaToString());
             if(this.#kor%2){
                 if(this.#kattintottMezo===null)
                     this.#kattintottMezo=event.detail
@@ -391,13 +391,16 @@ export class Jatekter{
         while(ix<3 && this.#mezoLista[(jatekos==1?0:6)+ix].babu!=jatekos)
             ix++
         
-        if(ix>=3)
-            return true
+        if(ix<3)
+            return false
         
         ix=0
-        while(ix<this.#mezoLista.length && jatekos!=this.#mezoLista[ix].babu)
+        while(ix<this.#mezoLista.length && -jatekos!=this.#mezoLista[ix].babu)
             ix++        
         console.log(ix);
-        return ix>=this.#mezoLista.length
+        if(ix>=this.#mezoLista.length)
+            return false
+        ix=0
+            return true
     }
 }
