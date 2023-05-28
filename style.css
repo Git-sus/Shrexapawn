@@ -1,3 +1,7 @@
+*{
+  box-sizing: border-box;
+}
+
 main {
   display: grid;
   width: 100%;
@@ -5,14 +9,36 @@ main {
   grid-template-columns: repeat(3, 1fr);
 }
 
-div {
+main > div {
   width: 100%;
   aspect-ratio: 1/1;
   font-size: 10vw;
   border: 1px solid black;
 }
 
-div:nth-child(odd) {
+main > div:nth-child(odd) {
   background-color: black;
   color: white;
+}
+
+#bar{
+  margin-top: 10px;
+  display: flex;
+  width: 100%;
+  max-width: 512px;
+  text-align: center;
+  color: white;
+}
+
+#bar > *{
+  height: 30px;
+  transition: all 1s;
+}
+
+#jatekos{
+  background-color: green;
+}
+
+#gep{
+  background-color: red;
 }
