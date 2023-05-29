@@ -190,8 +190,8 @@ export class Jatekter{
                  1,  0, -1,
                  0,  1,  0
             ], [
-                [6, 7],
-                [6, 8]
+                [5, 7],
+                [5, 8]
             ]),
             new GyufasDoboz([
                  0, -1, -1,
@@ -400,7 +400,7 @@ export class Jatekter{
                             console.warn("nyertél");
                             //console.log(this.#gepLepesei);
                             //console.log(this.#gyufasDobozok[this.#gepLepesei.length-1][this.#gepLepesei[this.#gepLepesei.length-1][0]].lepesek)
-                            this.#gyufasDobozok[this.#gepLepesei.length-1][this.#gepLepesei[this.#gepLepesei.length-1][0]].lepesek.splice(this.#gepLepesei[this.#gepLepesei.length-1][1],1)
+                            this.tanul()
                             this.#jatekosNyer++
                             this.general()
                         }
@@ -468,5 +468,16 @@ export class Jatekter{
             }
         //console.log("utolso ix: "+ix);
         return ix<this.#mezoLista.length-3
+    }
+
+    tanul(){
+        let ix=-1
+        do{
+            ix++
+            this.#gyufasDobozok[this.#gepLepesei.length-1-ix][this.#gepLepesei[this.#gepLepesei.length-1-ix][0]].lepesek.splice(this.#gepLepesei[this.#gepLepesei.length-1-ix][1],1)
+        }
+        while(this.#gyufasDobozok[this.#gepLepesei.length-1-ix][this.#gepLepesei[this.#gepLepesei.length-1-ix][0]].lepesek.length==0);
+        console.log(("sus ")+ix);
+        console.log(this.#gyufasDobozok);
     }
 }
