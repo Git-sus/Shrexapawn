@@ -385,13 +385,22 @@ export class Jatekter{
 
         jatekosLep(){
             $(window).on("elemValaszt",event =>{
+                console.log(event.detail.divElem);
                 //console.log(this.ellenorzes(1));
             //console.log(this.mezoListaToString());
-            if(this.#kor%2){
-                if(this.#kattintottMezo===null)
+            if(this.#kor%2 && !(this.#kattintottMezo===null && event.detail.babu==-1)){ 
+                if(this.#kattintottMezo===null && event.detail.babu==1){
                     this.#kattintottMezo=event.detail
+                    this.#kattintottMezo.divElem.css("border","5px solid green")
+                }
                 else{
-                    if(this.#kattintottMezo.LegalisLepes(event.detail) || this.#kattintottMezo.LegalisTamadas(event.detail)){
+                    if(this.#kattintottMezo.babu==1 && event.detail.babu==1 ){
+                        this.#kattintottMezo.divElem.css("border","0px solid red")
+                        this.#kattintottMezo=event.detail
+                        this.#kattintottMezo.divElem.css("border","5px solid green")
+                    }
+                    else if(this.#kattintottMezo.LegalisLepes(event.detail) || this.#kattintottMezo.LegalisTamadas(event.detail)){
+                        this.#kattintottMezo.divElem.css("border","0px solid red")
                         this.#kattintottMezo.csere(event.detail)
                         this.#kor++
                         if(this.ellenorzes(1))
@@ -404,8 +413,8 @@ export class Jatekter{
                             this.#jatekosNyer++
                             this.general()
                         }
+                        this.#kattintottMezo=null
                     }
-                    this.#kattintottMezo=null
                 }
             }
         })  

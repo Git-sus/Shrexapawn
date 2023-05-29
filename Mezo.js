@@ -26,6 +26,10 @@ export class Mezo{
         return this.#index
     }
 
+    get divElem(){
+        return this.#divElem
+    }
+
     LegalisLepes(masikMezo){
         return this.#babu!= 0 && masikMezo.babu == 0 && this.index - 3 * this.#babu == masikMezo.index
     }
