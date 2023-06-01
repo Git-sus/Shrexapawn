@@ -26,12 +26,16 @@ export class Mezo{
         return this.#index
     }
 
+    get divElem(){
+        return this.#divElem
+    }
+
     LegalisLepes(masikMezo){
-        return masikMezo.babu == 0 && this.index - 3 * this.#babu == masikMezo.index
+        return this.#babu!= 0 && masikMezo.babu == 0 && this.index - 3 * this.#babu == masikMezo.index
     }
 
     LegalisTamadas(masikMezo){
-        return masikMezo.babu == -this.#babu && (this.index - 3 * this.#babu == masikMezo.index + 1 || this.index - 3 * this.#babu == masikMezo.index - 1)
+        return masikMezo!== undefined && masikMezo.babu == -this.#babu && (this.index - 3 * this.#babu == masikMezo.index + 1 || this.index - 3 * this.#babu == masikMezo.index - 1) && Math.floor(this.#index/3)-this.#babu==Math.floor(masikMezo.index/3)
     }
 
     csere(masikMezo){
