@@ -1,5 +1,5 @@
 import GyufasDoboz from "./GyufasDoboz.js";
-import { Mezo } from "./Mezo.js";
+import Mezo from "./Mezo.js";
 
 /*
  0 | 1 | 2
