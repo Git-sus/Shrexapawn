@@ -1,4 +1,4 @@
-export class Mezo{
+class Mezo{
     #index
     #babu
     #divElem
@@ -47,3 +47,5 @@ export class Mezo{
         window.dispatchEvent(new CustomEvent("elemValaszt", {detail:this}))
     }
 }
+
+export default Mezo;
