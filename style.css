@@ -38,8 +38,10 @@ main > div:nth-child(odd) {
 
 #jatekos{
   background-color: green;
+  width: 50%;
 }
 
 #gep{
   background-color: red;
+  width: 50%;
 }

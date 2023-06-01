@@ -358,35 +358,36 @@ export class Jatekter{
            ])
         ]);
     }
-        general(){
-            $("main").html("")
-            
-            $("#jatekos").css("width","calc( "+(this.#jatekosNyer/(this.#jatekosNyer+this.#gepNyer)*100)+"% )")
-            $("#gep").css("width","calc( "+(this.#gepNyer/(this.#jatekosNyer+this.#gepNyer)*100)+"% )")
-            $("#jatekos").html((this.#jatekosNyer)?("játékos: "+this.#jatekosNyer):"")
-            $("#gep").html((this.#gepNyer)?("gép: "+this.#gepNyer):"")
-            this.#kor=1
-            this.#mezoLista=[]
-            for (let ix = 0; ix < 9; ix++) {
-                this.#mezoLista.push(new Mezo("main",ix))  
-            }
-            this.#kattintottMezo=null
-            this.#gepLepesei=[]
-            // console.log(this.#gyufasDobozok);
-        }
 
-        mezoListaToString() {
-            let tmp=""
-            this.#mezoLista.forEach(element => {
-                tmp+=element.babu
-            })
-            return tmp
+    general(){
+        $("main").html("")
+        
+        $("#jatekos").css("width",(this.#jatekosNyer/(this.#jatekosNyer+this.#gepNyer)*100)+"%")
+        $("#gep").css("width",(this.#gepNyer/(this.#jatekosNyer+this.#gepNyer)*100)+"%")
+        $("#jatekos").html((this.#jatekosNyer)?("játékos: "+this.#jatekosNyer):"")
+        $("#gep").html((this.#gepNyer)?("gép: "+this.#gepNyer):"")
+        this.#kor=1
+        this.#mezoLista=[]
+        for (let ix = 0; ix < 9; ix++) {
+            this.#mezoLista.push(new Mezo("main",ix))  
         }
+        this.#kattintottMezo=null
+        this.#gepLepesei=[]
+        // console.log(this.#gyufasDobozok);
+    }
 
-        jatekosLep(){
-            $(window).on("elemValaszt",event =>{
-                console.log(event.detail.divElem);
-                //console.log(this.ellenorzes(1));
+    mezoListaToString() {
+        let tmp=""
+        this.#mezoLista.forEach(element => {
+            tmp+=element.babu
+        })
+        return tmp
+    }
+
+    jatekosLep(){
+        $(window).on("elemValaszt",event =>{
+            console.log(event.detail.divElem);
+            //console.log(this.ellenorzes(1));
             //console.log(this.mezoListaToString());
             if(this.#kor%2 && !(this.#kattintottMezo===null && event.detail.babu==-1)){ 
                 if(this.#kattintottMezo===null && event.detail.babu==1){
@@ -411,35 +412,37 @@ export class Jatekter{
                             //console.log(this.#gyufasDobozok[this.#gepLepesei.length-1][this.#gepLepesei[this.#gepLepesei.length-1][0]].lepesek)
                             this.tanul()
                             this.#jatekosNyer++
-                            this.general()
+                            setTimeout(() => this.general(), 1000);
+                            
                         }
                         this.#kattintottMezo=null
                     }
                 }
             }
-        })  
+        })
     }
+
     gepLep(){
         setTimeout(() => {
             let allas=this.mezoListaToString()
-                let ix=0
-                while(allas!=this.#gyufasDobozok[this.#kor/2-1][ix].allas.join(""))
-                    ix++
-                let rndLepes=Math.floor(Math.random()*this.#gyufasDobozok[this.#kor/2-1][ix].lepesek.length)
-                console.log("geplep");
-                //console.log(this.#gyufasDobozok);
-                //console.log(rndLepes);
-                //console.log(this.#gyufasDobozok[this.#kor/2-1][ix].lepesek);
-                this.#gepLepesei.push([ix, rndLepes])
-                //console.log(this.#gepLepesei);
-                this.#mezoLista[this.#gyufasDobozok[this.#kor/2-1][ix].lepesek[rndLepes][0]].csere(this.#mezoLista[this.#gyufasDobozok[this.#kor/2-1][ix].lepesek[rndLepes][1]])
+            let ix=0
+            while(allas!=this.#gyufasDobozok[this.#kor/2-1][ix].allas.join(""))
+                ix++
+            let rndLepes=Math.floor(Math.random()*this.#gyufasDobozok[this.#kor/2-1][ix].lepesek.length)
+            console.log("geplep");
+            //console.log(this.#gyufasDobozok);
+            //console.log(rndLepes);
+            //console.log(this.#gyufasDobozok[this.#kor/2-1][ix].lepesek);
+            this.#gepLepesei.push([ix, rndLepes])
+            //console.log(this.#gepLepesei);
+            this.#mezoLista[this.#gyufasDobozok[this.#kor/2-1][ix].lepesek[rndLepes][0]].csere(this.#mezoLista[this.#gyufasDobozok[this.#kor/2-1][ix].lepesek[rndLepes][1]])
 
             if(this.ellenorzes(-1)){
                 this.#kor++
             }else{
                 console.error("vesztettél");
                 this.#gepNyer++
-                this.general()
+                setTimeout(() => this.general(), 1000);
             }
         }, 1000);
     }
@@ -461,31 +464,24 @@ export class Jatekter{
         
         ix=0
         while(ix<this.#mezoLista.length-3 && 
-            !(//this.#mezoLista[(jatekos==1?3:0)+ix].babu!=jatekos ||
-            (this.#mezoLista[(jatekos==1?0:3)+ix].LegalisLepes(this.#mezoLista[((jatekos==1?0:3)+ix) + 3 * jatekos ])) ||
-            this.#mezoLista[(jatekos==1?0:3)+ix].LegalisTamadas(this.#mezoLista[((jatekos==1?0:3)+ix) + 3 * jatekos +1]) ||
-            (this.#mezoLista[(jatekos==1?0:3)+ix].LegalisTamadas(this.#mezoLista[((jatekos==1?0:3)+ix) + 3 * jatekos -1]))
-            )){
-                //console.log("azonos babu "+(this.#mezoLista[(jatekos==1?3:0)+ix].babu!=jatekos));
-                // console.log("legal lepes "+ (this.#mezoLista[(jatekos==1?0:3)+ix].LegalisLepes(this.#mezoLista[((jatekos==1?0:3)+ix) + 3 * jatekos ])));
-                // console.log("jobb tam "+this.#mezoLista[(jatekos==1?0:3)+ix].LegalisTamadas(this.#mezoLista[((jatekos==1?0:3)+ix) + 3 * jatekos +1]))
-                // console.log("bal tam "+ (this.#mezoLista[(jatekos==1?0:3)+ix].LegalisTamadas(this.#mezoLista[((jatekos==1?0:3)+ix) + 3 * jatekos -1])));
-                // console.log(this.#mezoLista[(jatekos==1?0:3)+ix]);
-                // console.log("🐱🔫");
-                // console.log();
-                ix++
-            }
+        !(//this.#mezoLista[(jatekos==1?3:0)+ix].babu!=jatekos ||
+        (this.#mezoLista[(jatekos==1?0:3)+ix].LegalisLepes(this.#mezoLista[((jatekos==1?0:3)+ix) + 3 * jatekos ])) ||
+        this.#mezoLista[(jatekos==1?0:3)+ix].LegalisTamadas(this.#mezoLista[((jatekos==1?0:3)+ix) + 3 * jatekos +1]) ||
+        (this.#mezoLista[(jatekos==1?0:3)+ix].LegalisTamadas(this.#mezoLista[((jatekos==1?0:3)+ix) + 3 * jatekos -1]))
+        )){
+            ix++
+        }
         //console.log("utolso ix: "+ix);
         return ix<this.#mezoLista.length-3
     }
 
     tanul(){
-        let ix=-1
+        let ix=0
         do{
             ix++
-            this.#gyufasDobozok[this.#gepLepesei.length-1-ix][this.#gepLepesei[this.#gepLepesei.length-1-ix][0]].lepesek.splice(this.#gepLepesei[this.#gepLepesei.length-1-ix][1],1)
+            this.#gyufasDobozok[this.#gepLepesei.length-ix][this.#gepLepesei[this.#gepLepesei.length-ix][0]].lepesek.splice(this.#gepLepesei[this.#gepLepesei.length-ix][1],1)
         }
-        while(this.#gyufasDobozok[this.#gepLepesei.length-1-ix][this.#gepLepesei[this.#gepLepesei.length-1-ix][0]].lepesek.length==0);
+        while(this.#gyufasDobozok[this.#gepLepesei.length-ix][this.#gepLepesei[this.#gepLepesei.length-ix][0]].lepesek.length==0);
         console.log(("sus ")+ix);
         console.log(this.#gyufasDobozok);
     }
