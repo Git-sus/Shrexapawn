@@ -13,6 +13,10 @@ class GyufasDoboz
     {
         return this.#lepesek;
     }
+
+    torol(nth){
+        this.lepesek.splice(nth, 1)
+    }
 }
 
 export default GyufasDoboz;

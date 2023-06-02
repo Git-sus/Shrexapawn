@@ -419,7 +419,7 @@ class Jatekter
                             console.warn("nyertél");
                             this.tanul();
                             this.#jatekosGyozelmekSzama++;
-                            setTimeout(() => this.general(), 1000);
+                            setTimeout(() => this.general(), 2000);
                             
                         }
                         this.#kattintottMezo = null;
@@ -449,8 +449,9 @@ class Jatekter
             else
             {
                 console.error("vesztettél");
+                this.#mezoLista[this.#gyufasDobozok[this.#kor / 2 - 1][i].lepesek[rndLepes][1]].divElem.css("border", "5px solid red");
                 this.#gepGyozelmekSzama++;
-                setTimeout(() => this.general(), 1000);
+                setTimeout(() => this.general(), 2000);
             }
         }, 1000);
     }
@@ -497,7 +498,7 @@ class Jatekter
         do
         {
             i++;
-            this.#gyufasDobozok[this.#gepLepesei.length - i][this.#gepLepesei[this.#gepLepesei.length - i][0]].lepesek.splice(this.#gepLepesei[this.#gepLepesei.length - i][1], 1);
+            this.#gyufasDobozok[this.#gepLepesei.length - i][this.#gepLepesei[this.#gepLepesei.length - i][0]].torol(this.#gepLepesei[this.#gepLepesei.length - i][1]);
         }
         while (this.#gyufasDobozok[this.#gepLepesei.length - i][this.#gepLepesei[this.#gepLepesei.length - i][0]].lepesek.length === 0);
         console.log(("sus ") + i);
