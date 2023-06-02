@@ -433,16 +433,25 @@ class Jatekter
     gepLep()
     {
         setTimeout(() => {
-            let allas = this.mezoListaToString();
-            let i = 0;
+            const allas = this.mezoListaToString();
+            /*let i = 0;
             while (allas !== this.#gyufasDobozok[this.#kor / 2 - 1][i].allas.join(""))
             {
                 i++;
+            }*/
+            const koronBeluliGyufasDobozok = this.#gyufasDobozok[this.#kor / 2 - 1];
+            let gyufasDoboz;
+            let i = -1;
+            do
+            {
+                gyufasDoboz = koronBeluliGyufasDobozok[++i];
             }
-            let rndLepes = Math.floor(Math.random() * this.#gyufasDobozok[this.#kor / 2 - 1][i].lepesek.length);
+            while (allas !== gyufasDoboz.allas.join(""));
             console.log("geplep");
-            this.#gepLepesei.push([i, rndLepes]);
-            this.#mezoLista[this.#gyufasDobozok[this.#kor / 2 - 1][i].lepesek[rndLepes][0]].csere(this.#mezoLista[this.#gyufasDobozok[this.#kor / 2 - 1][i].lepesek[rndLepes][1]]);
+            const rndLepesIndex = Math.floor(Math.random() * gyufasDoboz.lepesek.length);
+            this.#gepLepesei.push([i, rndLepesIndex]);
+            const rndLepes = gyufasDoboz.lepesek[rndLepesIndex];
+            this.#mezoLista[rndLepes[0]].csere(this.#mezoLista[rndLepes[1]]);
             if (this.ellenorzes(-1))
             {
                 this.#kor++;
