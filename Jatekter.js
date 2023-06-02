@@ -440,7 +440,7 @@ class Jatekter
             }
             let rndLepes = Math.floor(Math.random() * this.#gyufasDobozok[this.#kor / 2 - 1][i].lepesek.length);
             console.log("geplep");
-            this.#gepLepesei.push([i, rndLepes]);
+            this.#gepLepesei.push([this.#gyufasDobozok[this.#kor / 2 - 1][i], rndLepes]);
             this.#mezoLista[this.#gyufasDobozok[this.#kor / 2 - 1][i].lepesek[rndLepes][0]].csere(this.#mezoLista[this.#gyufasDobozok[this.#kor / 2 - 1][i].lepesek[rndLepes][1]]);
             if (this.ellenorzes(-1))
             {
@@ -494,13 +494,13 @@ class Jatekter
     
     tanul()
     {
-        let i = 0;
+        let i = this.#gepLepesei.length;
         do
         {
-            i++;
-            this.#gyufasDobozok[this.#gepLepesei.length - i][this.#gepLepesei[this.#gepLepesei.length - i][0]].torol(this.#gepLepesei[this.#gepLepesei.length - i][1]);
+            i--;
+            this.#gepLepesei[i][0].torol(this.#gepLepesei[i][1]);
         }
-        while (this.#gyufasDobozok[this.#gepLepesei.length - i][this.#gepLepesei[this.#gepLepesei.length - i][0]].lepesek.length === 0);
+        while (this.#gepLepesei[i][0].lepesek.length === 0);
         console.log(("sus ") + i);
         console.log(this.#gyufasDobozok);
     }
