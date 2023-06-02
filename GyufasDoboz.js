@@ -1,6 +1,6 @@
 class GyufasDoboz
 {
-    #allas;
+    allas;
     #lepesek;
 
     constructor(allas, lepesek)
@@ -9,13 +9,9 @@ class GyufasDoboz
         this.#lepesek = lepesek;
     }
 
-    osszehasonlit(allas)
+    get lepesek()
     {
-        return this.#allas == allas;
-    }
-
-    get lepesek(){
-        return this.#lepesek
+        return this.#lepesek;
     }
 }
 
