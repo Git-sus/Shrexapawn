@@ -32,8 +32,6 @@ class Jatekter
         this.#mainElem = $("main");
         this.#jatekosElem = $("#jatekos");
         this.#gepElem = $("#gep");
-        this.general()
-        this.jatekosLep()
        
         //2. indexű lépések
 
@@ -361,6 +359,9 @@ class Jatekter
                [5, 8]
            ])
         ]);
+
+        this.general()
+        this.jatekosLep()
     }
 
     general()
@@ -390,8 +391,8 @@ class Jatekter
     jatekosLep()
     {
         $(window).on("elemValaszt", event => {
-            if (this.#kor % 2 && !(this.#kattintottMezo === null && event.detail.babu === -1))
-            { 
+            if (this.#kor % 2 === 1 && !(this.#kattintottMezo === null && event.detail.babu !== 1))
+            {
                 if (this.#kattintottMezo === null && event.detail.babu === 1)
                 {
                     this.#kattintottMezo = event.detail;
@@ -475,13 +476,28 @@ class Jatekter
         {
             return false;
         }
-        i = 0;
-        while (i < this.#mezoLista.length-3 && 
+        /*i = 0;
+        while (i < this.#mezoLista.length - 3 && 
         !((this.#mezoLista[(jatekos === 1 ? 0 : 3) + i].legalisLepes(this.#mezoLista[((jatekos === 1 ? 0 : 3) + i) + 3 * jatekos])) ||
         this.#mezoLista[(jatekos === 1 ? 0 : 3) + i].legalisTamadas(this.#mezoLista[((jatekos === 1 ? 0 : 3) + i) + 3 * jatekos + 1]) ||
         (this.#mezoLista[(jatekos === 1 ? 0 : 3) + i].legalisTamadas(this.#mezoLista[((jatekos === 1 ? 0 : 3) + i) + 3 * jatekos - 1]))))
         {
             i++;
+        }
+        return i < this.#mezoLista.length - 3;*/
+        i = 0;
+        let jelenlegiMezoIndex = (jatekos === 1 ? 0 : 3) + i;
+        let mezo = this.#mezoLista[jelenlegiMezoIndex];
+        let kovetkezoMezoIndex = jelenlegiMezoIndex + 3 * jatekos;
+        while (i < this.#mezoLista.length - 3 &&
+        !(this.#lehetLepesVagyTamadas(masikMezo => mezo.legalisLepes(masikMezo), this.#mezoLista[kovetkezoMezoIndex]) ||
+        this.#lehetLepesVagyTamadas(masikMezo => mezo.legalisTamadas(masikMezo), this.#mezoLista[kovetkezoMezoIndex + 1]) ||
+        this.#lehetLepesVagyTamadas(masikMezo => mezo.legalisTamadas(masikMezo), this.#mezoLista[kovetkezoMezoIndex - 1])))
+        {
+            i++;
+            jelenlegiMezoIndex++;
+            mezo = this.#mezoLista[jelenlegiMezoIndex];
+            kovetkezoMezoIndex = jelenlegiMezoIndex + 3 * jatekos;
         }
         return i < this.#mezoLista.length - 3;
     }
@@ -497,6 +513,11 @@ class Jatekter
         while (this.#gyufasDobozok[this.#gepLepesei.length - i][this.#gepLepesei[this.#gepLepesei.length - i][0]].lepesek.length === 0);
         console.log(("sus ") + i);
         console.log(this.#gyufasDobozok);
+    }
+
+    #lehetLepesVagyTamadas(lepesVagyTamadas, mezo)
+    {
+        return lepesVagyTamadas(mezo);
     }
 }
 
