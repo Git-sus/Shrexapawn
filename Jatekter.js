@@ -365,11 +365,7 @@ class Jatekter
 
     general()
     {
-        this.#mainElem.html("");
-        this.#jatekosElem.css("width", (this.#jatekosGyozelmekSzama / (this.#jatekosGyozelmekSzama + this.#gepGyozelmekSzama) * 100) + "%");
-        this.#gepElem.css("width", (this.#gepGyozelmekSzama / (this.#jatekosGyozelmekSzama + this.#gepGyozelmekSzama) * 100) + "%");
-        this.#jatekosElem.html(this.#jatekosGyozelmekSzama ? ("játékos: " + this.#jatekosGyozelmekSzama) : "");
-        this.#gepElem.html(this.#gepGyozelmekSzama ? ("gép: " + this.#gepGyozelmekSzama) : "");
+        this.eredmenyMutat()
         this.#kor = 1;
         this.#mezoLista = [];
         for (let i = 0; i < 9; i++)
@@ -378,6 +374,14 @@ class Jatekter
         }
         this.#kattintottMezo = null;
         this.#gepLepesei = [];
+    }
+
+    eredmenyMutat(){
+        this.#mainElem.html("");
+        this.#jatekosElem.css("width", (this.#jatekosGyozelmekSzama / (this.#jatekosGyozelmekSzama + this.#gepGyozelmekSzama) * 100) + "%");
+        this.#gepElem.css("width", (this.#gepGyozelmekSzama / (this.#jatekosGyozelmekSzama + this.#gepGyozelmekSzama) * 100) + "%");
+        this.#jatekosElem.html(this.#jatekosGyozelmekSzama ? ("játékos: " + this.#jatekosGyozelmekSzama) : "");
+        this.#gepElem.html(this.#gepGyozelmekSzama ? ("gép: " + this.#gepGyozelmekSzama) : "");
     }
 
     mezoListaToString()
@@ -401,13 +405,13 @@ class Jatekter
                 {
                     if (this.#kattintottMezo.babu === 1 && event.detail.babu === 1)
                     {
-                        this.#kattintottMezo.divElem.css("border", "0px solid red");
+                        this.#kattintottMezo.divElem.css("border", "1px solid black");
                         this.#kattintottMezo=event.detail;
                         this.#kattintottMezo.divElem.css("border", "5px solid green");
                     }
                     else if (this.#kattintottMezo.legalisLepes(event.detail) || this.#kattintottMezo.legalisTamadas(event.detail))
                     {
-                        this.#kattintottMezo.divElem.css("border", "0px solid red");
+                        this.#kattintottMezo.divElem.css("border", "1px solid black");
                         this.#kattintottMezo.csere(event.detail);
                         this.#kor++;
                         if (this.ellenorzes(1))
@@ -458,7 +462,6 @@ class Jatekter
     
     ellenorzes(jatekos)
     {
-        console.log(this.celbaErte(jatekos) && this.vanBabue(jatekos) && this.vanLegallisLepese(jatekos));
         return this.celbaErte(jatekos) && this.vanBabue(jatekos) && this.vanLegallisLepese(jatekos)
     }
 
@@ -482,10 +485,11 @@ class Jatekter
 
     vanLegallisLepese(jatekos){
         let i = 0;
+        let ideMajdKellEgyJobbNev=(jatekos === 1 ? 0 : 3)
         while (i < this.#mezoLista.length-3 && 
-        !((this.#mezoLista[(jatekos === 1 ? 0 : 3) + i].legalisLepes(this.#mezoLista[((jatekos === 1 ? 0 : 3) + i) + 3 * jatekos])) ||
-        this.#mezoLista[(jatekos === 1 ? 0 : 3) + i].legalisTamadas(this.#mezoLista[((jatekos === 1 ? 0 : 3) + i) + 3 * jatekos + 1]) ||
-        (this.#mezoLista[(jatekos === 1 ? 0 : 3) + i].legalisTamadas(this.#mezoLista[((jatekos === 1 ? 0 : 3) + i) + 3 * jatekos - 1]))))
+        !((this.#mezoLista[ideMajdKellEgyJobbNev + i].legalisLepes(this.#mezoLista[(ideMajdKellEgyJobbNev + i) + 3 * jatekos])) ||
+        this.#mezoLista[ideMajdKellEgyJobbNev + i].legalisTamadas(this.#mezoLista[(ideMajdKellEgyJobbNev + i) + 3 * jatekos + 1]) ||
+        (this.#mezoLista[ideMajdKellEgyJobbNev + i].legalisTamadas(this.#mezoLista[(ideMajdKellEgyJobbNev + i) + 3 * jatekos - 1]))))
         {
             i++;
         }
