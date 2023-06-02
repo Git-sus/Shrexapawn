@@ -486,38 +486,40 @@ class Jatekter
         }
         return i < this.#mezoLista.length - 3;*/
         i = 0;
+        const szuksegesIndexekSzama = this.#mezoLista.length - 3;
         let jelenlegiMezoIndex = (jatekos === 1 ? 0 : 3) + i;
         let mezo = this.#mezoLista[jelenlegiMezoIndex];
         let kovetkezoMezoIndex = jelenlegiMezoIndex + 3 * jatekos;
-        while (i < this.#mezoLista.length - 3 &&
-        !(this.#lehetLepesVagyTamadas(masikMezo => mezo.legalisLepes(masikMezo), this.#mezoLista[kovetkezoMezoIndex]) ||
-        this.#lehetLepesVagyTamadas(masikMezo => mezo.legalisTamadas(masikMezo), this.#mezoLista[kovetkezoMezoIndex + 1]) ||
-        this.#lehetLepesVagyTamadas(masikMezo => mezo.legalisTamadas(masikMezo), this.#mezoLista[kovetkezoMezoIndex - 1])))
+        while (i < szuksegesIndexekSzama && !(mezo.legalisLepes(this.#mezoLista[kovetkezoMezoIndex]) || mezo.legalisTamadas(this.#mezoLista[kovetkezoMezoIndex + 1]) || mezo.legalisTamadas(this.#mezoLista[kovetkezoMezoIndex - 1])))
         {
             i++;
-            jelenlegiMezoIndex++;
-            mezo = this.#mezoLista[jelenlegiMezoIndex];
+            mezo = this.#mezoLista[++jelenlegiMezoIndex];
             kovetkezoMezoIndex = jelenlegiMezoIndex + 3 * jatekos;
         }
-        return i < this.#mezoLista.length - 3;
+        return i < szuksegesIndexekSzama;
     }
 
     tanul()
     {
-        let i = 0;
+        /*let i = 0;
         do
         {
             i++;
             this.#gyufasDobozok[this.#gepLepesei.length - i][this.#gepLepesei[this.#gepLepesei.length - i][0]].lepesek.splice(this.#gepLepesei[this.#gepLepesei.length - i][1], 1);
         }
-        while (this.#gyufasDobozok[this.#gepLepesei.length - i][this.#gepLepesei[this.#gepLepesei.length - i][0]].lepesek.length === 0);
+        while (this.#gyufasDobozok[this.#gepLepesei.length - i][this.#gepLepesei[this.#gepLepesei.length - i][0]].lepesek.length === 0);*/
+        let i = 1;
+        let lepesek;
+        do
+        {
+            const index = this.#gepLepesei.length - i++;
+            const lepes = this.#gepLepesei[index];
+            lepesek = this.#gyufasDobozok[index][lepes[0]].lepesek;
+            lepesek.splice(lepes[1], 1);
+        }
+        while (lepesek.length === 0);
         console.log(("sus ") + i);
         console.log(this.#gyufasDobozok);
-    }
-
-    #lehetLepesVagyTamadas(lepesVagyTamadas, mezo)
-    {
-        return lepesVagyTamadas(mezo);
     }
 }
 
