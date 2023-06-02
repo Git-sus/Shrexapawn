@@ -457,25 +457,30 @@ class Jatekter
     
     ellenorzes(jatekos)
     {
+        console.log(this.celbaErte(jatekos) && this.vanBabue(jatekos) && this.vanLegallisLepese(jatekos));
+        return this.celbaErte(jatekos) && this.vanBabue(jatekos) && this.vanLegallisLepese(jatekos)
+    }
+
+    celbaErte(jatekos){
         let i = 0;
         while (i < 3 && this.#mezoLista[(jatekos === 1 ? 0 : 6) + i].babu !== jatekos)
         {
             i++;
         }
-        if (i < 3)
-        {
-            return false;
-        }
-        i = 0;
+        return i>=3;
+    }
+
+    vanBabue(jatekos){
+        let i = 0;
         while (i < this.#mezoLista.length && jatekos !== -this.#mezoLista[i].babu)
         {
             i++;
         }
-        if (i >= this.#mezoLista.length)
-        {
-            return false;
-        }
-        i = 0;
+        return i < this.#mezoLista.length;
+    }
+
+    vanLegallisLepese(jatekos){
+        let i = 0;
         while (i < this.#mezoLista.length-3 && 
         !((this.#mezoLista[(jatekos === 1 ? 0 : 3) + i].legalisLepes(this.#mezoLista[((jatekos === 1 ? 0 : 3) + i) + 3 * jatekos])) ||
         this.#mezoLista[(jatekos === 1 ? 0 : 3) + i].legalisTamadas(this.#mezoLista[((jatekos === 1 ? 0 : 3) + i) + 3 * jatekos + 1]) ||
@@ -485,7 +490,7 @@ class Jatekter
         }
         return i < this.#mezoLista.length - 3;
     }
-
+    
     tanul()
     {
         let i = 0;
