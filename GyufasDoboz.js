@@ -1,12 +1,17 @@
 class GyufasDoboz
 {
-    allas;
+    #allas;
     #lepesek;
 
     constructor(allas, lepesek)
     {
-        this.allas = allas;
+        this.#allas = allas;
         this.#lepesek = lepesek;
+    }
+
+    get allas()
+    {
+        return this.#allas
     }
 
     get lepesek()
