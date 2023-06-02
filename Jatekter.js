@@ -32,6 +32,9 @@ class Jatekter
         this.#mainElem = $("main");
         this.#jatekosElem = $("#jatekos");
         this.#gepElem = $("#gep");
+
+        this.general()
+        this.jatekosLep()
        
         //2. indexű lépések
 
@@ -212,9 +215,9 @@ class Jatekter
                 [0, 4]
             ]),
             new GyufasDoboz([
-                0, -1, -1,
-                0,  1,  0,
-                1,  0,  0
+                 0, -1, -1,
+                 0,  1,  0,
+                 1,  0,  0
             ], [
                 [2, 4],
                 [2, 5]
@@ -359,18 +362,15 @@ class Jatekter
                [5, 8]
            ])
         ]);
-
-        this.general()
-        this.jatekosLep()
     }
 
     general()
     {
         this.#mainElem.html("");
-        this.#jatekosElem.css("width", (this.#jatekosGyozelmekSzama / (this.#jatekosGyozelmekSzama + this.#gepGyozelmekSzama) * 100) + "%");
-        this.#gepElem.css("width", (this.#gepGyozelmekSzama / (this.#jatekosGyozelmekSzama + this.#gepGyozelmekSzama) * 100) + "%");
-        this.#jatekosElem.html(this.#jatekosGyozelmekSzama ? ("játékos: " + this.#jatekosGyozelmekSzama) : "");
-        this.#gepElem.html(this.#gepGyozelmekSzama ? ("gép: " + this.#gepGyozelmekSzama) : "");
+        this.#jatekosElem.css("width", this.#gyozelemSzazalekotSzamit(this.#jatekosGyozelmekSzama)); // <-- Ezeket szerintem inkább úgy kéne, hogy a szülő div-re "display: grid;"-et rakunk és a "grid-template-columns" értékét fr-ekkel adjuk meg (pl.: ha az állás 5 : 3, akkor: "grid-template-columns: 5fr 3fr")
+        this.#gepElem.css("width", this.#gyozelemSzazalekotSzamit(this.#gepGyozelmekSzama)); // <--
+        this.#jatekosElem.html(this.#gyozelemSzazalekotKiir(this.#jatekosGyozelmekSzama, "Játékos"));
+        this.#gepElem.html(this.#gyozelemSzazalekotKiir(this.#gepGyozelmekSzama, "Gép"));
         this.#kor = 1;
         this.#mezoLista = [];
         for (let i = 0; i < 9; i++)
@@ -379,6 +379,16 @@ class Jatekter
         }
         this.#kattintottMezo = null;
         this.#gepLepesei = [];
+    }
+
+    #gyozelemSzazalekotSzamit(gyozelemSzamok)
+    {
+        return (gyozelemSzamok / (this.#jatekosGyozelmekSzama + this.#gepGyozelmekSzama) * 100) + "%"
+    }
+
+    #gyozelemSzazalekotKiir(gyozelemSzamok, jatekos)
+    {
+        return gyozelemSzamok > 0 ? (jatekos + ": " + gyozelemSzamok) : "";
     }
 
     mezoListaToString()
@@ -396,19 +406,19 @@ class Jatekter
                 if (this.#kattintottMezo === null && event.detail.babu === 1)
                 {
                     this.#kattintottMezo = event.detail;
-                    this.#kattintottMezo.divElem.css("border", "5px solid green");
+                    this.#kattintottMezo.divElem.css("border", "5px solid green"); // <-- Ezeket a sorokat én úgy csinálnám, hogy definiálnék egy css class-t ami csinál neki egy border-t és egy "class toggle" metódust raknék rá ami ki-bekapcsolgatja azt az osztályt a html elemen
                 }
                 else
                 {
                     if (this.#kattintottMezo.babu === 1 && event.detail.babu === 1)
                     {
-                        this.#kattintottMezo.divElem.css("border", "0px solid red");
-                        this.#kattintottMezo=event.detail;
-                        this.#kattintottMezo.divElem.css("border", "5px solid green");
+                        this.#kattintottMezo.divElem.css("border", "0px solid red"); // <--
+                        this.#kattintottMezo = event.detail;
+                        this.#kattintottMezo.divElem.css("border", "5px solid green"); // <--
                     }
                     else if (this.#kattintottMezo.legalisLepes(event.detail) || this.#kattintottMezo.legalisTamadas(event.detail))
                     {
-                        this.#kattintottMezo.divElem.css("border", "0px solid red");
+                        this.#kattintottMezo.divElem.css("border", "0px solid red"); // <--
                         this.#kattintottMezo.csere(event.detail);
                         this.#kor++;
                         if (this.ellenorzes(1))
