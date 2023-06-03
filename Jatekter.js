@@ -33,7 +33,6 @@ class Jatekter
         this.#jatekosElem = $("#jatekos");
         this.#gepElem = $("#gep");
         this.general()
-        this.jatekosLep()
        
         //2. indexű lépések
 
@@ -382,72 +381,92 @@ class Jatekter
         return tmp;
     }
 
-    jatekosLep()
+    async jatekosLep()
     {
-        $(window).on("elemValaszt", event => {
-            if (this.#kor % 2 && !(this.#kattintottMezo === null && event.detail.babu === -1))
-            { 
-                if (this.#kattintottMezo === null && event.detail.babu === 1)
-                {
-                    this.#kattintottMezo = event.detail;
-                    this.#kattintottMezo.divElem.css("border", "5px solid green");
-                }
-                else
-                {
-                    if (this.#kattintottMezo.babu === 1 && event.detail.babu === 1)
-                    {
-                        this.#kattintottMezo.divElem.css("border", "1px solid black");
-                        this.#kattintottMezo=event.detail;
-                        this.#kattintottMezo.divElem.css("border", "5px solid green");
-                    }
-                    else if (this.#kattintottMezo.legalisLepes(event.detail) || this.#kattintottMezo.legalisTamadas(event.detail))
-                    {
-                        this.#kattintottMezo.divElem.css("border", "1px solid black");
-                        this.#kattintottMezo.csere(event.detail);
-                        this.#kor++;
-                        if (this.ellenorzes(1))
+        
+        let func = (bruh) =>{
+            return new Promise(function(valasz){
+                // console.log(bruh);
+                $(window).on("elemValaszt", event => {
+                    if (bruh.#kor % 2 && !(bruh.#kattintottMezo === null && event.detail.babu === -1))
+                    { 
+                        if (bruh.#kattintottMezo === null && event.detail.babu === 1)
                         {
-                            this.gepLep();
+                            bruh.#kattintottMezo = event.detail;
+                            bruh.#kattintottMezo.divElem.css("border", "5px solid green");
                         }
                         else
                         {
-                            console.warn("nyertél");
-                            this.tanul();
-                            this.#jatekosGyozelmekSzama++;
-                            setTimeout(() => this.general(), 2000);
+                            if (bruh.#kattintottMezo.babu === 1 && event.detail.babu === 1)
+                            {
+                                bruh.#kattintottMezo.divElem.css("border", "1px solid black");
+                                bruh.#kattintottMezo=event.detail;
+                                bruh.#kattintottMezo.divElem.css("border", "5px solid green");
+                            }
+                            else if (bruh.#kattintottMezo.legalisLepes(event.detail) || bruh.#kattintottMezo.legalisTamadas(event.detail))
+                            {
+                                bruh.#kattintottMezo.divElem.css("border", "1px solid black");
+                                bruh.#kattintottMezo.csere(event.detail);
+                                bruh.#kor++;
+                                if (bruh.ellenorzes(1))
+                                {
+                                    let a= bruh.gepLep()
+                                    .then(adat=>{
+                                        //console.log("AAAAAAAAAAAAAAAAAAA",adat)
+                                        if(adat==-1)
+                                            valasz(adat)
+                                    })
+                                }
+                                else
+                                {
+                                    console.warn("nyertél");
+                                    bruh.tanul();
+                                    bruh.#jatekosGyozelmekSzama++;
+                                    valasz(1)
+                                }
+                                bruh.#kattintottMezo = null;
+                            }
                         }
-                        this.#kattintottMezo = null;
                     }
-                }
-            }
-        });
+                })
+            })
+        }
+        return await func(this)
     }
 
+    
     gepLep()
     {
-        setTimeout(() => {
-            let allas = this.mezoListaToString();
-            let i = 0;
-            while (allas !== this.#gyufasDobozok[this.#kor / 2 - 1][i].allas.join(""))
-            {
-                i++;
-            }
-            let rndLepes = Math.floor(Math.random() * this.#gyufasDobozok[this.#kor / 2 - 1][i].lepesek.length);
-            console.log("geplep");
-            this.#gepLepesei.push([this.#gyufasDobozok[this.#kor / 2 - 1][i], rndLepes]);
-            this.#mezoLista[this.#gyufasDobozok[this.#kor / 2 - 1][i].lepesek[rndLepes][0]].csere(this.#mezoLista[this.#gyufasDobozok[this.#kor / 2 - 1][i].lepesek[rndLepes][1]]);
-            if (this.ellenorzes(-1))
-            {
-                this.#kor++;
-            }
-            else
-            {
-                console.error("vesztettél");
-                this.#mezoLista[this.#gyufasDobozok[this.#kor / 2 - 1][i].lepesek[rndLepes][1]].divElem.css("border", "5px solid red");
-                this.#gepGyozelmekSzama++;
-                setTimeout(() => this.general(), 2000);
-            }
-        }, 1000);
+        let func = (bruh) =>{
+            return new Promise(function(valasz){
+                // console.log(bruh);
+                setTimeout(() => {
+                    let allas = bruh.mezoListaToString();
+                    let i = 0;
+                    while (allas !== bruh.#gyufasDobozok[bruh.#kor / 2 - 1][i].allas.join(""))
+                    {
+                        i++;
+                    }
+                    let rndLepes = Math.floor(Math.random() * bruh.#gyufasDobozok[bruh.#kor / 2 - 1][i].lepesek.length);
+                    console.log("geplep");
+                    bruh.#gepLepesei.push([bruh.#gyufasDobozok[bruh.#kor / 2 - 1][i], rndLepes]);
+                    bruh.#mezoLista[bruh.#gyufasDobozok[bruh.#kor / 2 - 1][i].lepesek[rndLepes][0]].csere(bruh.#mezoLista[bruh.#gyufasDobozok[bruh.#kor / 2 - 1][i].lepesek[rndLepes][1]]);
+                    if (bruh.ellenorzes(-1))
+                    {
+                        bruh.#kor++;
+                        valasz(0)
+                    }
+                    else
+                    {
+                        console.error("vesztettél");
+                        bruh.#mezoLista[bruh.#gyufasDobozok[bruh.#kor / 2 - 1][i].lepesek[rndLepes][1]].divElem.css("border", "5px solid red");
+                        bruh.#gepGyozelmekSzama++;
+                        valasz(-1)
+                    }
+                }, 1000);
+            })
+        }
+        return func(this)
     }
     
     ellenorzes(jatekos)
@@ -497,6 +516,10 @@ class Jatekter
         while (this.#gepLepesei[i][0].lepesek.length === 0);
         console.log(("sus ") + i);
         console.log(this.#gyufasDobozok);
+    }
+
+    async valasz(){
+       return this.jatekosLep()
     }
 }
 

@@ -9,7 +9,9 @@ class Csatorna{
         this.#Jatekter= new Jatekter()
         this.#Statisztika = new Statisztika();
 
-        this.#Statisztika.asyncCall(this.#Jatekter.valasz)
+        // fetch(this.#Jatekter)
+        // .then((response) => console.log(response))
+        this.#Jatekter.valasz().then(resolve => console.log("async ",resolve))
     }
 }
 

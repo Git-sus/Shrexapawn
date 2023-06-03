@@ -16,7 +16,7 @@ class Statisztika{
         else
             this.#gep++
         this.#gepLepesek.push(gepLepesek)
-
+        console.log(this.#gep,this.#jatekos);
     }
 
     // eredmenyMutat(){
