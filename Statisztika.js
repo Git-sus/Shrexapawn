@@ -23,7 +23,7 @@ class Statisztika{
         else
             this.#gepGyozelmekSzama++
         this.#gepLepesek.push(gepLepesek)
-        console.log(this.#gepGyozelmekSzama,this.#jatekosGyozelmekSzama);
+        console.log(this.#gepLepesek);
         this.eredmenyMutat()
     }
 

@@ -9,33 +9,22 @@ import Mezo from "./Mezo.js";
  6 | 7 | 8
 */
 
-class Jatekter
+class Jatekter 
 {
     #mainElem;
 
     #kor;
     #kattintottMezo;
 
-    #gyufasDobozok = [];
+    static #gyufasDobozok = [];
     #mezoLista = [];
     #gepLepesei = [];
 
-    constructor()
-    {
-        this.#mainElem = $("main"); 
+    static{
 
-        this.#kor = 1;
-        this.#mezoLista = [];
-        for (let i = 0; i < 9; i++)
-        {
-            this.#mezoLista.push(new Mezo("main", i));
-        }
-        this.#kattintottMezo = null;
-        this.#gepLepesei = [];
-       
-        //2. indexű lépések
+         //2. indexű lépések
 
-        this.#gyufasDobozok.push([
+         Jatekter.#gyufasDobozok.push([
             new GyufasDoboz([
                 -1, -1, -1,
                  1,  0,  0,
@@ -68,7 +57,7 @@ class Jatekter
 
         //4. indexű lépések
         
-        this.#gyufasDobozok.push([
+        Jatekter.#gyufasDobozok.push([
             new GyufasDoboz([
                 -1,  0, -1,
                 -1,  1,  0,
@@ -245,7 +234,7 @@ class Jatekter
 
         //6. indexű lépések
 
-        this.#gyufasDobozok.push([
+        Jatekter.#gyufasDobozok.push([
             new GyufasDoboz([
                  0,  0, -1,
                 -1, -1,  1,
@@ -361,6 +350,20 @@ class Jatekter
         ]);
     }
 
+    constructor()
+    {
+        this.#mainElem = $("main"); 
+
+        this.#kor = 1;
+        this.#mezoLista = [];
+        for (let i = 0; i < 9; i++)
+        {
+            this.#mezoLista.push(new Mezo("main", i));
+        }
+        this.#kattintottMezo = null;
+        this.#gepLepesei = [];
+    }
+
     #mezoListaToString()
     {
         let tmp = "";
@@ -397,12 +400,12 @@ class Jatekter
                                 self.#kor++;
                                 if (self.#ellenorzes(1))
                                 {
-                                    let a= self.#gepLep()
-                                    .then(adat=>{
-                                        //console.log("AAAAAAAAAAAAAAAAAAA",adat)
-                                        if(adat==-1)
-                                            valasz([adat, self.#gepLepesei])
-                                    })
+                                    setTimeout(() => {
+                                        let a=self.#gepLep()
+                                        console.log(a);
+                                        if(a==-1)
+                                            valasz([-1, self.#gepLepesei])
+                                    }, 1000);
                                 }
                                 else
                                 {
@@ -423,35 +426,24 @@ class Jatekter
     
     #gepLep()
     {
-        let func = (self) =>{
-            return new Promise(function(valasz){
-                // console.log(bruh);
-                setTimeout(() => {
-                    let allas = self.#mezoListaToString();
-                    let i = 0;
-                    while (allas !== self.#gyufasDobozok[self.#kor / 2 - 1][i].allas.join(""))
-                    {
-                        i++;
-                    }
-                    let rndLepes = Math.floor(Math.random() * self.#gyufasDobozok[self.#kor / 2 - 1][i].lepesek.length);
-                    console.log("geplep");
-                    self.#gepLepesei.push([self.#gyufasDobozok[self.#kor / 2 - 1][i], rndLepes]);
-                    self.#mezoLista[self.#gyufasDobozok[self.#kor / 2 - 1][i].lepesek[rndLepes][0]].csere(self.#mezoLista[self.#gyufasDobozok[self.#kor / 2 - 1][i].lepesek[rndLepes][1]]);
-                    if (self.#ellenorzes(-1))
-                    {
-                        self.#kor++;
-                        valasz(0)
-                    }
-                    else
-                    {
-                        console.error("vesztettél");
-                        self.#mezoLista[self.#gyufasDobozok[self.#kor / 2 - 1][i].lepesek[rndLepes][1]].divElem.css("border", "5px solid red");
-                        valasz(-1)
-                    }
-                }, 1000);
-            })
+        let allas = this.#mezoListaToString();
+        let i = 0;
+        while (allas !== Jatekter.#gyufasDobozok[this.#kor / 2 - 1][i].allas.join(""))
+        {
+            i++;
         }
-        return func(this)
+        let rndLepes = Math.floor(Math.random() * Jatekter.#gyufasDobozok[this.#kor / 2 - 1][i].lepesek.length);
+        console.log("geplep");
+        this.#gepLepesei.push([Jatekter.#gyufasDobozok[this.#kor / 2 - 1][i], rndLepes]);
+        this.#mezoLista[Jatekter.#gyufasDobozok[this.#kor / 2 - 1][i].lepesek[rndLepes][0]].csere(this.#mezoLista[Jatekter.#gyufasDobozok[this.#kor / 2 - 1][i].lepesek[rndLepes][1]]);
+        if (this.#ellenorzes(-1))
+        {
+            this.#kor++;
+            return (0)
+        }   
+        console.error("vesztettél");
+        this.#mezoLista[Jatekter.#gyufasDobozok[this.#kor / 2 - 1][i].lepesek[rndLepes][1]].divElem.css("border", "5px solid red");
+        return (-1)
     }
     
     #ellenorzes(jatekos)
@@ -500,7 +492,7 @@ class Jatekter
         }
         while (this.#gepLepesei[i][0].lepesek.length === 0);
         console.log(("sus ") + i);
-        console.log(this.#gyufasDobozok);
+        console.log(Jatekter.#gyufasDobozok);
     }
 
     async valasz(){
