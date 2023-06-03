@@ -365,7 +365,6 @@ class Jatekter
 
     general()
     {
-        this.eredmenyMutat()
         this.#kor = 1;
         this.#mezoLista = [];
         for (let i = 0; i < 9; i++)
@@ -374,14 +373,6 @@ class Jatekter
         }
         this.#kattintottMezo = null;
         this.#gepLepesei = [];
-    }
-
-    eredmenyMutat(){
-        this.#mainElem.html("");
-        this.#jatekosElem.css("width", (this.#jatekosGyozelmekSzama / (this.#jatekosGyozelmekSzama + this.#gepGyozelmekSzama) * 100) + "%");
-        this.#gepElem.css("width", (this.#gepGyozelmekSzama / (this.#jatekosGyozelmekSzama + this.#gepGyozelmekSzama) * 100) + "%");
-        this.#jatekosElem.html(this.#jatekosGyozelmekSzama ? ("játékos: " + this.#jatekosGyozelmekSzama) : "");
-        this.#gepElem.html(this.#gepGyozelmekSzama ? ("gép: " + this.#gepGyozelmekSzama) : "");
     }
 
     mezoListaToString()
@@ -424,7 +415,6 @@ class Jatekter
                             this.tanul();
                             this.#jatekosGyozelmekSzama++;
                             setTimeout(() => this.general(), 2000);
-                            
                         }
                         this.#kattintottMezo = null;
                     }

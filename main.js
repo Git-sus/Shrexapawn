@@ -1,5 +1,5 @@
-import Jatekter from "./Jatekter.js";
+import Csatorna from "./Csatorna.js";
 
 $(() => {
-    new Jatekter();
+    new Csatorna();
 });
