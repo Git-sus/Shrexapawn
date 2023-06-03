@@ -11,28 +11,27 @@ import Mezo from "./Mezo.js";
 
 class Jatekter
 {
-    #gepGyozelmekSzama;
-    #jatekosGyozelmekSzama;
-    #kor;
+    #mainElem;
 
+    #kor;
     #kattintottMezo;
 
     #gyufasDobozok = [];
     #mezoLista = [];
     #gepLepesei = [];
 
-    #mainElem;
-    #jatekosElem;
-    #gepElem;
-
     constructor()
     {
-        this.#gepGyozelmekSzama = 0;
-        this.#jatekosGyozelmekSzama = 0;
-        this.#mainElem = $("main");
-        this.#jatekosElem = $("#jatekos");
-        this.#gepElem = $("#gep");
-        this.#general()
+        this.#mainElem = $("main"); 
+
+        this.#kor = 1;
+        this.#mezoLista = [];
+        for (let i = 0; i < 9; i++)
+        {
+            this.#mezoLista.push(new Mezo("main", i));
+        }
+        this.#kattintottMezo = null;
+        this.#gepLepesei = [];
        
         //2. indexű lépések
 
@@ -362,18 +361,6 @@ class Jatekter
         ]);
     }
 
-    #general()
-    {
-        this.#kor = 1;
-        this.#mezoLista = [];
-        for (let i = 0; i < 9; i++)
-        {
-            this.#mezoLista.push(new Mezo("main", i));
-        }
-        this.#kattintottMezo = null;
-        this.#gepLepesei = [];
-    }
-
     #mezoListaToString()
     {
         let tmp = "";
@@ -384,47 +371,46 @@ class Jatekter
     async #jatekosLep()
     {
         
-        let func = (bruh) =>{
+        let func = (self) =>{
             return new Promise(function(valasz){
                 // console.log(bruh);
                 $(window).on("elemValaszt", event => {
-                    if (bruh.#kor % 2 && !(bruh.#kattintottMezo === null && event.detail.babu === -1))
+                    if (self.#kor % 2 && !(self.#kattintottMezo === null && event.detail.babu === -1))
                     { 
-                        if (bruh.#kattintottMezo === null && event.detail.babu === 1)
+                        if (self.#kattintottMezo === null && event.detail.babu === 1)
                         {
-                            bruh.#kattintottMezo = event.detail;
-                            bruh.#kattintottMezo.divElem.css("border", "5px solid green");
+                            self.#kattintottMezo = event.detail;
+                            self.#kattintottMezo.divElem.css("border", "5px solid green");
                         }
                         else
                         {
-                            if (bruh.#kattintottMezo.babu === 1 && event.detail.babu === 1)
+                            if (self.#kattintottMezo.babu === 1 && event.detail.babu === 1)
                             {
-                                bruh.#kattintottMezo.divElem.css("border", "1px solid black");
-                                bruh.#kattintottMezo=event.detail;
-                                bruh.#kattintottMezo.divElem.css("border", "5px solid green");
+                                self.#kattintottMezo.divElem.css("border", "1px solid black");
+                                self.#kattintottMezo=event.detail;
+                                self.#kattintottMezo.divElem.css("border", "5px solid green");
                             }
-                            else if (bruh.#kattintottMezo.legalisLepes(event.detail) || bruh.#kattintottMezo.legalisTamadas(event.detail))
+                            else if (self.#kattintottMezo.legalisLepes(event.detail) || self.#kattintottMezo.legalisTamadas(event.detail))
                             {
-                                bruh.#kattintottMezo.divElem.css("border", "1px solid black");
-                                bruh.#kattintottMezo.csere(event.detail);
-                                bruh.#kor++;
-                                if (bruh.#ellenorzes(1))
+                                self.#kattintottMezo.divElem.css("border", "1px solid black");
+                                self.#kattintottMezo.csere(event.detail);
+                                self.#kor++;
+                                if (self.#ellenorzes(1))
                                 {
-                                    let a= bruh.#gepLep()
+                                    let a= self.#gepLep()
                                     .then(adat=>{
                                         //console.log("AAAAAAAAAAAAAAAAAAA",adat)
                                         if(adat==-1)
-                                            valasz(adat)
+                                            valasz([adat, self.#gepLepesei])
                                     })
                                 }
                                 else
                                 {
                                     console.warn("nyertél");
-                                    bruh.#tanul();
-                                    bruh.#jatekosGyozelmekSzama++;
-                                    valasz(1)
+                                    self.#tanul();
+                                    valasz([1, self.#gepLepesei])
                                 }
-                                bruh.#kattintottMezo = null;
+                                self.#kattintottMezo = null;
                             }
                         }
                     }
@@ -437,30 +423,29 @@ class Jatekter
     
     #gepLep()
     {
-        let func = (bruh) =>{
+        let func = (self) =>{
             return new Promise(function(valasz){
                 // console.log(bruh);
                 setTimeout(() => {
-                    let allas = bruh.#mezoListaToString();
+                    let allas = self.#mezoListaToString();
                     let i = 0;
-                    while (allas !== bruh.#gyufasDobozok[bruh.#kor / 2 - 1][i].allas.join(""))
+                    while (allas !== self.#gyufasDobozok[self.#kor / 2 - 1][i].allas.join(""))
                     {
                         i++;
                     }
-                    let rndLepes = Math.floor(Math.random() * bruh.#gyufasDobozok[bruh.#kor / 2 - 1][i].lepesek.length);
+                    let rndLepes = Math.floor(Math.random() * self.#gyufasDobozok[self.#kor / 2 - 1][i].lepesek.length);
                     console.log("geplep");
-                    bruh.#gepLepesei.push([bruh.#gyufasDobozok[bruh.#kor / 2 - 1][i], rndLepes]);
-                    bruh.#mezoLista[bruh.#gyufasDobozok[bruh.#kor / 2 - 1][i].lepesek[rndLepes][0]].csere(bruh.#mezoLista[bruh.#gyufasDobozok[bruh.#kor / 2 - 1][i].lepesek[rndLepes][1]]);
-                    if (bruh.#ellenorzes(-1))
+                    self.#gepLepesei.push([self.#gyufasDobozok[self.#kor / 2 - 1][i], rndLepes]);
+                    self.#mezoLista[self.#gyufasDobozok[self.#kor / 2 - 1][i].lepesek[rndLepes][0]].csere(self.#mezoLista[self.#gyufasDobozok[self.#kor / 2 - 1][i].lepesek[rndLepes][1]]);
+                    if (self.#ellenorzes(-1))
                     {
-                        bruh.#kor++;
+                        self.#kor++;
                         valasz(0)
                     }
                     else
                     {
                         console.error("vesztettél");
-                        bruh.#mezoLista[bruh.#gyufasDobozok[bruh.#kor / 2 - 1][i].lepesek[rndLepes][1]].divElem.css("border", "5px solid red");
-                        bruh.#gepGyozelmekSzama++;
+                        self.#mezoLista[self.#gyufasDobozok[self.#kor / 2 - 1][i].lepesek[rndLepes][1]].divElem.css("border", "5px solid red");
                         valasz(-1)
                     }
                 }, 1000);
@@ -519,7 +504,11 @@ class Jatekter
     }
 
     async valasz(){
-       return this.#jatekosLep()
+        return this.#jatekosLep()
+    }
+
+    destructor(){
+        this.#mainElem.html("");
     }
 }
 

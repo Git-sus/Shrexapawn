@@ -6,12 +6,20 @@ class Csatorna{
     #Statisztika
 
     constructor(){
-        this.#Jatekter= new Jatekter()
+        
         this.#Statisztika = new Statisztika();
+        this.jatek()
+    }
 
-        // fetch(this.#Jatekter)
-        // .then((response) => console.log(response))
-        this.#Jatekter.valasz().then(resolve => console.log("async ",resolve))
+    jatek(){
+        this.#Jatekter= new Jatekter()
+        this.#Jatekter.valasz().then(resolve => {
+            this.#Statisztika.ujAdat(resolve[0],resolve[1])
+            setTimeout(() => {
+                this.#Jatekter.destructor()
+                this.jatek()
+            }, 2000);
+        })
     }
 }
 
