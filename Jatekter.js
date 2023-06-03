@@ -32,7 +32,7 @@ class Jatekter
         this.#mainElem = $("main");
         this.#jatekosElem = $("#jatekos");
         this.#gepElem = $("#gep");
-        this.general()
+        this.#general()
        
         //2. indexű lépések
 
@@ -362,7 +362,7 @@ class Jatekter
         ]);
     }
 
-    general()
+    #general()
     {
         this.#kor = 1;
         this.#mezoLista = [];
@@ -374,14 +374,14 @@ class Jatekter
         this.#gepLepesei = [];
     }
 
-    mezoListaToString()
+    #mezoListaToString()
     {
         let tmp = "";
         this.#mezoLista.forEach(element => tmp += element.babu);
         return tmp;
     }
 
-    async jatekosLep()
+    async #jatekosLep()
     {
         
         let func = (bruh) =>{
@@ -408,9 +408,9 @@ class Jatekter
                                 bruh.#kattintottMezo.divElem.css("border", "1px solid black");
                                 bruh.#kattintottMezo.csere(event.detail);
                                 bruh.#kor++;
-                                if (bruh.ellenorzes(1))
+                                if (bruh.#ellenorzes(1))
                                 {
-                                    let a= bruh.gepLep()
+                                    let a= bruh.#gepLep()
                                     .then(adat=>{
                                         //console.log("AAAAAAAAAAAAAAAAAAA",adat)
                                         if(adat==-1)
@@ -420,7 +420,7 @@ class Jatekter
                                 else
                                 {
                                     console.warn("nyertél");
-                                    bruh.tanul();
+                                    bruh.#tanul();
                                     bruh.#jatekosGyozelmekSzama++;
                                     valasz(1)
                                 }
@@ -435,13 +435,13 @@ class Jatekter
     }
 
     
-    gepLep()
+    #gepLep()
     {
         let func = (bruh) =>{
             return new Promise(function(valasz){
                 // console.log(bruh);
                 setTimeout(() => {
-                    let allas = bruh.mezoListaToString();
+                    let allas = bruh.#mezoListaToString();
                     let i = 0;
                     while (allas !== bruh.#gyufasDobozok[bruh.#kor / 2 - 1][i].allas.join(""))
                     {
@@ -451,7 +451,7 @@ class Jatekter
                     console.log("geplep");
                     bruh.#gepLepesei.push([bruh.#gyufasDobozok[bruh.#kor / 2 - 1][i], rndLepes]);
                     bruh.#mezoLista[bruh.#gyufasDobozok[bruh.#kor / 2 - 1][i].lepesek[rndLepes][0]].csere(bruh.#mezoLista[bruh.#gyufasDobozok[bruh.#kor / 2 - 1][i].lepesek[rndLepes][1]]);
-                    if (bruh.ellenorzes(-1))
+                    if (bruh.#ellenorzes(-1))
                     {
                         bruh.#kor++;
                         valasz(0)
@@ -469,12 +469,12 @@ class Jatekter
         return func(this)
     }
     
-    ellenorzes(jatekos)
+    #ellenorzes(jatekos)
     {
-        return this.celbaErte(jatekos) && this.vanBabue(jatekos) && this.vanLegallisLepese(jatekos)
+        return this.#celbaErte(jatekos) && this.#vanBabue(jatekos) && this.#vanLegallisLepese(jatekos)
     }
 
-    celbaErte(jatekos){
+    #celbaErte(jatekos){
         let i = 0;
         while (i < 3 && this.#mezoLista[(jatekos === 1 ? 0 : 6) + i].babu !== jatekos)
         {
@@ -483,7 +483,7 @@ class Jatekter
         return i>=3;
     }
 
-    vanBabue(jatekos){
+    #vanBabue(jatekos){
         let i = 0;
         while (i < this.#mezoLista.length && jatekos !== -this.#mezoLista[i].babu)
         {
@@ -492,7 +492,7 @@ class Jatekter
         return i < this.#mezoLista.length;
     }
 
-    vanLegallisLepese(jatekos){
+    #vanLegallisLepese(jatekos){
         let i = 0;
         let ideMajdKellEgyJobbNev=(jatekos === 1 ? 0 : 3)
         while (i < this.#mezoLista.length-3 && 
@@ -505,7 +505,7 @@ class Jatekter
         return i < this.#mezoLista.length - 3;
     }
     
-    tanul()
+    #tanul()
     {
         let i = this.#gepLepesei.length;
         do
@@ -519,7 +519,7 @@ class Jatekter
     }
 
     async valasz(){
-       return this.jatekosLep()
+       return this.#jatekosLep()
     }
 }
 
