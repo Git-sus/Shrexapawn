@@ -2,7 +2,11 @@
   box-sizing: border-box;
 }
 
-main, .minitabla {
+html{
+  overflow: hidden;
+}
+
+main, .minitabla{
   display: grid;
   width: 100%;
   max-width: 512px;
@@ -46,35 +50,52 @@ main > div:nth-child(odd), .minitabla > div:nth-child(odd){
   background-color: red;
   width: 50%;
 }
+
 ol, .minitabla > div{
   font-size: 20pt;
 }
+
 .lepes{
   display: inline;
+  cursor: pointer;
+  text-decoration: dotted underline 3px;
 }
 
 .minitabla{
-  /* display: none; */
+  width: 128px;
+}
+
+.minitablaBox{
   opacity: 0;
   position: absolute;
   transition: all .5s;
-  max-width: 128px;
+  display: grid;
+  grid-template-columns: auto auto;
+  background-color: lightgray;
+  padding: 10px;
+  user-select: none;
+}
+
+.minitablaBox > p{
+  margin: auto 20px;
 }
 
 .eredmeny{
   display: inline;
 }
 
-.eredmeny:hover > .minitabla{
-  /* display: block; */
+.eredmeny:hover > .minitablaBox{
   opacity: 1;
 }
-.eredmeny:hover > .minitabla:hover{
-  /* display: block; */
+.eredmeny:hover > .minitablaBox:hover{
   opacity: 0;
 }
 
 svg{
   position: absolute;
-  width: 50px;
+  width: 60px;
+}
+
+span{
+  font-weight: bold;
 }
