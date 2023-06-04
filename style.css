@@ -6,14 +6,23 @@ html{
   overflow: hidden;
 }
 
-main, .minitabla{
+main{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+aside{
+  margin-left: 20px;
+}
+
+#tabla, .minitabla{
   display: grid;
   width: 100%;
   max-width: 512px;
   grid-template-columns: repeat(3, 1fr);
 }
 
-main > div, .minitabla > div{
+#tabla > div, .minitabla > div{
   width: 100%;
   aspect-ratio: 1/1;
   font-size: 10vw;
@@ -21,7 +30,7 @@ main > div, .minitabla > div{
   background-color: white;
 }
 
-main > div:nth-child(odd), .minitabla > div:nth-child(odd){
+#tabla > div:nth-child(odd), .minitabla > div:nth-child(odd){
   background-color: black;
   color: white;
 }
@@ -74,6 +83,7 @@ ol, .minitabla > div{
   background-color: lightgray;
   padding: 10px;
   user-select: none;
+  width: 450px;
 }
 
 .minitablaBox > p{
@@ -98,4 +108,10 @@ svg{
 
 span{
   font-weight: bold;
+}
+
+@media (max-width: 600px){
+    main{
+      grid-template-columns: 1fr;
+    }
 }

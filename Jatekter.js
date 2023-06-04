@@ -11,7 +11,7 @@ import Mezo from "./Mezo.js";
 
 class Jatekter 
 {
-    #mainElem;
+    #tablaElem;
 
     #kor;
     #kattintottMezo;
@@ -352,13 +352,13 @@ class Jatekter
 
     constructor()
     {
-        this.#mainElem = $("main"); 
+        this.#tablaElem = $("#tabla"); 
 
         this.#kor = 1;
         this.#mezoLista = [];
         for (let i = 0; i < 9; i++)
         {
-            this.#mezoLista.push(new Mezo("main", i));
+            this.#mezoLista.push(new Mezo("#tabla", i));
         }
         this.#kattintottMezo = null;
         this.#gepLepesei = [];
@@ -503,7 +503,7 @@ class Jatekter
     }
 
     destructor(){
-        this.#mainElem.html("");
+        this.#tablaElem.html("");
     }
 }
 

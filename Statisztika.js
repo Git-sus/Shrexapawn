@@ -57,10 +57,18 @@ class Statisztika{
             </div>`
         });
         $("ol").eq(0).append(`<li>${tmp}</li>`)
-        //console.log($("li:last > *").map(function(){return this}))
         $("li:last > *").on("mousemove", function(event){
             jQuery(this).children(".minitablaBox").css("top", event.pageY-10-jQuery(this).children(".minitablaBox").height()/2)
-            jQuery(this).children(".minitablaBox").css("left", event.pageX+20)
+            jQuery(this).children(".minitablaBox").css("left", minitablaBoxIrany(event, jQuery(this).children(".minitablaBox")))
+        
+            function minitablaBoxIrany(event, box){
+                if(event.pageX+box.width()+20<window.innerWidth)
+                    return event.pageX+20
+                else if(event.pageX-box.width()-40>0)
+                    return event.pageX-40-box.width()
+                box.css("top", event.pageY-box.height()-40)    
+                return event.pageX-80
+            }
         })
        
     }
