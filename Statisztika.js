@@ -67,7 +67,7 @@ class Statisztika{
                 else if(event.pageX-box.width()-40>0)
                     return event.pageX-40-box.width()
                 box.css("top", event.pageY-box.height()-40)    
-                return event.pageX-80
+                return event.pageX-120
             }
         })
        

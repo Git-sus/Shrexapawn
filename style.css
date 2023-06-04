@@ -52,12 +52,12 @@ aside{
 
 #jatekos {
   background-color: green;
-  width: 50%;
+  /* width: 50%; */
 }
 
 #gep {
   background-color: red;
-  width: 50%;
+  /* width: 50%; */
 }
 
 ol, .minitabla > div{
