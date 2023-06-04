@@ -2,21 +2,21 @@
   box-sizing: border-box;
 }
 
-main {
+main, .tabla {
   display: grid;
   width: 100%;
   max-width: 512px;
   grid-template-columns: repeat(3, 1fr);
 }
 
-main > div {
+main > div, .tabla > div{
   width: 100%;
   aspect-ratio: 1/1;
   font-size: 10vw;
   border: 1px solid black;
 }
 
-main > div:nth-child(odd) {
+main > div:nth-child(odd), .tabla > div:nth-child(odd){
   background-color: black;
   color: white;
 }
@@ -44,4 +44,31 @@ main > div:nth-child(odd) {
 #gep {
   background-color: red;
   width: 50%;
+}
+ol, .tabla > div{
+  font-size: 20pt;
+}
+.lepes{
+  display: inline;
+}
+
+.tabla{
+  /* display: none; */
+  opacity: 0;
+  position: absolute;
+  transition: all .5s;
+  max-width: 128px;
+}
+
+.eredmeny{
+  display: inline;
+}
+
+.eredmeny:hover > .tabla{
+  /* display: block; */
+  opacity: 1;
+}
+.eredmeny:hover > .tabla:hover{
+  /* display: block; */
+  opacity: 0;
 }

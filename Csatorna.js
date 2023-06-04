@@ -14,6 +14,7 @@ class Csatorna{
     jatek(){
         this.#Jatekter= new Jatekter()
         this.#Jatekter.valasz().then(resolve => {
+            //console.log(resolve);
             this.#Statisztika.ujAdat(resolve[0],resolve[1])
             setTimeout(() => {
                 this.#Jatekter.destructor()

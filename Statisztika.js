@@ -42,11 +42,34 @@ class Statisztika{
         //todo
         let tmp=""
         this.#gepLepesek[this.#gepLepesek.length-1].forEach(element => {
-            tmp+=element[0].allas.join()+"||"
+            console.log(element[0].lepesek[element[1]][1]);
+            tmp+=`
+            <div class="eredmeny">
+                <div class=lepes>
+                    ${String.fromCharCode(97+Math.floor(element[0].lepesek[element[1]][1]/3))+(element[0].lepesek[element[1]][1]%3+1)}</div>
+                <div class="tabla">
+                    ${this.minitablaGeneral(element)}
+                </div>
+            </div>`
         });
         $("ol").eq(0).append(`<li>${tmp}</li>`)
-        console.log(this.#gepLepesek[this.#gepLepesek.length-1][0][0].allas);
-        
+        //console.log($("li:last > *").map(function(){return this}))
+        $("li:last > *").on("mousemove", function(event){
+            jQuery(this).children(".tabla").css("top", event.pageY+10)
+            jQuery(this).children(".tabla").css("left", event.pageX+10)
+        })
+       
+    }
+
+    minitablaGeneral(element){
+        let tmp=""
+        for (let ix = 0; ix < 9; ix++) {
+            console.log("fkdhjl",element[0].allas);
+           tmp+=`<div>
+           ${element[0].allas[ix]}
+           </div>`
+        }
+        return tmp
     }
 }
 

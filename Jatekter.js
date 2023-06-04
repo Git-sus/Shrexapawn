@@ -405,9 +405,18 @@ class Jatekter
                             }
                             else
                             {
+                                //let a =structuredClone(self.#gepLepesei)
+                                let a=[]
+                                self.#gepLepesei.forEach(element => {
+                                    console.log("2", element);
+                                    element=element.slice()
+                                    //a.push([{allas:element[0].allas,lepesek:element[0].lepesek.slice()},element[1]])
+                                    a.push([new GyufasDoboz(element[0].allas,element[0].lepesek.slice()),element[1]])
+                                });
                                 console.warn("nyertél");
                                 self.#tanul();
-                                valasz([1, self.#gepLepesei])
+                                console.log(a);
+                                valasz([1, a])
                             }
                             self.#kattintottMezo = null;
                         }
