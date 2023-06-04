@@ -41,7 +41,7 @@ class Mezo
 
     legalisTamadas(masikMezo)
     {
-        return masikMezo !== undefined && masikMezo.babu === -this.#babu && (this.index - 3 * this.#babu === masikMezo.index + 1 || this.index - 3 * this.#babu == masikMezo.index - 1) && Math.floor(this.#index / 3) - this.#babu === Math.floor(masikMezo.index / 3);
+        return masikMezo !== undefined && masikMezo.babu === -this.#babu && (this.index - 3 * this.#babu === masikMezo.index + 1 || this.index - 3 * this.#babu === masikMezo.index - 1) && Math.floor(this.#index / 3) - this.#babu === Math.floor(masikMezo.index / 3);
     }
 
     csere(masikMezo)

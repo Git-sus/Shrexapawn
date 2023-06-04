@@ -32,6 +32,7 @@ class Jatekter
         this.#mainElem = $("main");
         this.#jatekosElem = $("#jatekos");
         this.#gepElem = $("#gep");
+
         this.general()
         this.jatekosLep()
        
@@ -214,9 +215,9 @@ class Jatekter
                 [0, 4]
             ]),
             new GyufasDoboz([
-                0, -1, -1,
-                0,  1,  0,
-                1,  0,  0
+                 0, -1, -1,
+                 0,  1,  0,
+                 1,  0,  0
             ], [
                 [2, 4],
                 [2, 5]
@@ -365,7 +366,11 @@ class Jatekter
 
     general()
     {
-        this.eredmenyMutat()
+        this.#mainElem.html("");
+        this.#jatekosElem.css("width", this.#gyozelemSzazalekotSzamit(this.#jatekosGyozelmekSzama)); // <-- Ezeket szerintem inkább úgy kéne, hogy a szülő div-re "display: grid;"-et rakunk és a "grid-template-columns" értékét fr-ekkel adjuk meg (pl.: ha az állás 5 : 3, akkor: "grid-template-columns: 5fr 3fr")
+        this.#gepElem.css("width", this.#gyozelemSzazalekotSzamit(this.#gepGyozelmekSzama)); // <--
+        this.#jatekosElem.html(this.#gyozelemSzazalekotKiir(this.#jatekosGyozelmekSzama, "Játékos"));
+        this.#gepElem.html(this.#gyozelemSzazalekotKiir(this.#gepGyozelmekSzama, "Gép"));
         this.#kor = 1;
         this.#mezoLista = [];
         for (let i = 0; i < 9; i++)
@@ -376,12 +381,14 @@ class Jatekter
         this.#gepLepesei = [];
     }
 
-    eredmenyMutat(){
-        this.#mainElem.html("");
-        this.#jatekosElem.css("width", (this.#jatekosGyozelmekSzama / (this.#jatekosGyozelmekSzama + this.#gepGyozelmekSzama) * 100) + "%");
-        this.#gepElem.css("width", (this.#gepGyozelmekSzama / (this.#jatekosGyozelmekSzama + this.#gepGyozelmekSzama) * 100) + "%");
-        this.#jatekosElem.html(this.#jatekosGyozelmekSzama ? ("játékos: " + this.#jatekosGyozelmekSzama) : "");
-        this.#gepElem.html(this.#gepGyozelmekSzama ? ("gép: " + this.#gepGyozelmekSzama) : "");
+    #gyozelemSzazalekotSzamit(gyozelemSzamok)
+    {
+        return (gyozelemSzamok / (this.#jatekosGyozelmekSzama + this.#gepGyozelmekSzama) * 100) + "%"
+    }
+
+    #gyozelemSzazalekotKiir(gyozelemSzamok, jatekos)
+    {
+        return gyozelemSzamok > 0 ? (jatekos + ": " + gyozelemSzamok) : "";
     }
 
     mezoListaToString()
@@ -394,12 +401,12 @@ class Jatekter
     jatekosLep()
     {
         $(window).on("elemValaszt", event => {
-            if (this.#kor % 2 && !(this.#kattintottMezo === null && event.detail.babu === -1))
-            { 
+            if (this.#kor % 2 === 1 && !(this.#kattintottMezo === null && event.detail.babu !== 1))
+            {
                 if (this.#kattintottMezo === null && event.detail.babu === 1)
                 {
                     this.#kattintottMezo = event.detail;
-                    this.#kattintottMezo.divElem.css("border", "5px solid green");
+                    this.#kattintottMezo.divElem.css("border", "5px solid green"); // <-- Ezeket a sorokat én úgy csinálnám, hogy definiálnék egy css class-t ami csinál neki egy border-t és egy "class toggle" metódust raknék rá ami ki-bekapcsolgatja azt az osztályt a html elemen
                 }
                 else
                 {
@@ -436,16 +443,25 @@ class Jatekter
     gepLep()
     {
         setTimeout(() => {
-            let allas = this.mezoListaToString();
-            let i = 0;
+            const allas = this.mezoListaToString();
+            /*let i = 0;
             while (allas !== this.#gyufasDobozok[this.#kor / 2 - 1][i].allas.join(""))
             {
                 i++;
+            }*/
+            const koronBeluliGyufasDobozok = this.#gyufasDobozok[this.#kor / 2 - 1];
+            let gyufasDoboz;
+            let i = 0;
+            do
+            {
+                gyufasDoboz = koronBeluliGyufasDobozok[i++];
             }
-            let rndLepes = Math.floor(Math.random() * this.#gyufasDobozok[this.#kor / 2 - 1][i].lepesek.length);
+            while (allas !== gyufasDoboz.allas.join(""));
             console.log("geplep");
-            this.#gepLepesei.push([this.#gyufasDobozok[this.#kor / 2 - 1][i], rndLepes]);
-            this.#mezoLista[this.#gyufasDobozok[this.#kor / 2 - 1][i].lepesek[rndLepes][0]].csere(this.#mezoLista[this.#gyufasDobozok[this.#kor / 2 - 1][i].lepesek[rndLepes][1]]);
+            const rndLepesIndex = Math.floor(Math.random() * gyufasDoboz.lepesek.length);
+            this.#gepLepesei.push([gyufasDoboz, rndLepesIndex]);
+            const rndLepes = gyufasDoboz.lepesek[rndLepesIndex];
+            this.#mezoLista[rndLepes[0]].csere(this.#mezoLista[rndLepes[1]]);
             if (this.ellenorzes(-1))
             {
                 this.#kor++;
@@ -453,7 +469,7 @@ class Jatekter
             else
             {
                 console.error("vesztettél");
-                this.#mezoLista[this.#gyufasDobozok[this.#kor / 2 - 1][i].lepesek[rndLepes][1]].divElem.css("border", "5px solid red");
+                this.#mezoLista[rndLepes[1]].divElem.css("border", "5px solid red");
                 this.#gepGyozelmekSzama++;
                 setTimeout(() => this.general(), 2000);
             }
@@ -484,16 +500,19 @@ class Jatekter
     }
 
     vanLegallisLepese(jatekos){
+        
         let i = 0;
-        let ideMajdKellEgyJobbNev=(jatekos === 1 ? 0 : 3)
-        while (i < this.#mezoLista.length-3 && 
-        !((this.#mezoLista[ideMajdKellEgyJobbNev + i].legalisLepes(this.#mezoLista[(ideMajdKellEgyJobbNev + i) + 3 * jatekos])) ||
-        this.#mezoLista[ideMajdKellEgyJobbNev + i].legalisTamadas(this.#mezoLista[(ideMajdKellEgyJobbNev + i) + 3 * jatekos + 1]) ||
-        (this.#mezoLista[ideMajdKellEgyJobbNev + i].legalisTamadas(this.#mezoLista[(ideMajdKellEgyJobbNev + i) + 3 * jatekos - 1]))))
+        const szuksegesIndexekSzama = this.#mezoLista.length - 3;
+        let jelenlegiMezoIndex = (jatekos === 1 ? 0 : 3) + i;
+        let mezo = this.#mezoLista[jelenlegiMezoIndex];
+        let kovetkezoMezoIndex = jelenlegiMezoIndex + 3 * jatekos;
+        while (i < szuksegesIndexekSzama && !(mezo.legalisLepes(this.#mezoLista[kovetkezoMezoIndex]) || mezo.legalisTamadas(this.#mezoLista[kovetkezoMezoIndex + 1]) || mezo.legalisTamadas(this.#mezoLista[kovetkezoMezoIndex - 1])))
         {
             i++;
+            mezo = this.#mezoLista[++jelenlegiMezoIndex];
+            kovetkezoMezoIndex = jelenlegiMezoIndex + 3 * jatekos;
         }
-        return i < this.#mezoLista.length - 3;
+        return i < szuksegesIndexekSzama;
     }
     
     tanul()
@@ -502,6 +521,7 @@ class Jatekter
         do
         {
             i--;
+            console.log(this.#gepLepesei);
             this.#gepLepesei[i][0].torol(this.#gepLepesei[i][1]);
         }
         while (this.#gepLepesei[i][0].lepesek.length === 0);
