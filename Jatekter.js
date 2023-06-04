@@ -201,9 +201,9 @@ class Jatekter
                 [0, 4]
             ]),
             new GyufasDoboz([
-                0, -1, -1,
-                0,  1,  0,
-                1,  0,  0
+                 0, -1, -1,
+                 0,  1,  0,
+                 1,  0,  0
             ], [
                 [2, 4],
                 [2, 5]
@@ -429,23 +429,27 @@ class Jatekter
     
     #gepLep()
     {
-        let allas = this.#mezoListaToString();
+        const allas = this.#mezoListaToString();
+        const koronBeluliGyufasDobozok = Jatekter.#gyufasDobozok[this.#kor / 2 - 1];
+        let gyufasDoboz;
         let i = 0;
-        while (allas !== Jatekter.#gyufasDobozok[this.#kor / 2 - 1][i].allas.join(""))
+        do
         {
-            i++;
+            gyufasDoboz = koronBeluliGyufasDobozok[i++];
         }
-        let rndLepes = Math.floor(Math.random() * Jatekter.#gyufasDobozok[this.#kor / 2 - 1][i].lepesek.length);
+        while (allas !== gyufasDoboz.allas.join(""));
         console.log("geplep");
-        this.#gepLepesei.push([Jatekter.#gyufasDobozok[this.#kor / 2 - 1][i], rndLepes]);
-        this.#mezoLista[Jatekter.#gyufasDobozok[this.#kor / 2 - 1][i].lepesek[rndLepes][0]].csere(this.#mezoLista[Jatekter.#gyufasDobozok[this.#kor / 2 - 1][i].lepesek[rndLepes][1]]);
+        const rndLepesIndex = Math.floor(Math.random() * gyufasDoboz.lepesek.length);
+        this.#gepLepesei.push([gyufasDoboz, rndLepesIndex]);
+        const rndLepes = gyufasDoboz.lepesek[rndLepesIndex];
+        this.#mezoLista[rndLepes[0]].csere(this.#mezoLista[rndLepes[1]]);
         if (this.#ellenorzes(-1))
         {
             this.#kor++;
             return (0)
         }   
         console.error("vesztettél");
-        this.#mezoLista[Jatekter.#gyufasDobozok[this.#kor / 2 - 1][i].lepesek[rndLepes][1]].divElem.css("border", "5px solid red");
+        this.#mezoLista[rndLepes[1]].divElem.css("border", "5px solid red");
         return (-1)
     }
     
@@ -474,15 +478,17 @@ class Jatekter
 
     #vanLegallisLepese(jatekos){
         let i = 0;
-        let ideMajdKellEgyJobbNev=(jatekos === 1 ? 0 : 3)
-        while (i < this.#mezoLista.length-3 && 
-        !((this.#mezoLista[ideMajdKellEgyJobbNev + i].legalisLepes(this.#mezoLista[(ideMajdKellEgyJobbNev + i) + 3 * jatekos])) ||
-        this.#mezoLista[ideMajdKellEgyJobbNev + i].legalisTamadas(this.#mezoLista[(ideMajdKellEgyJobbNev + i) + 3 * jatekos + 1]) ||
-        (this.#mezoLista[ideMajdKellEgyJobbNev + i].legalisTamadas(this.#mezoLista[(ideMajdKellEgyJobbNev + i) + 3 * jatekos - 1]))))
+        const szuksegesIndexekSzama = this.#mezoLista.length - 3;
+        let jelenlegiMezoIndex = (jatekos === 1 ? 0 : 3) + i;
+        let mezo = this.#mezoLista[jelenlegiMezoIndex];
+        let kovetkezoMezoIndex = jelenlegiMezoIndex + 3 * jatekos;
+        while (i < szuksegesIndexekSzama && !(mezo.legalisLepes(this.#mezoLista[kovetkezoMezoIndex]) || mezo.legalisTamadas(this.#mezoLista[kovetkezoMezoIndex + 1]) || mezo.legalisTamadas(this.#mezoLista[kovetkezoMezoIndex - 1])))
         {
             i++;
+            mezo = this.#mezoLista[++jelenlegiMezoIndex];
+            kovetkezoMezoIndex = jelenlegiMezoIndex + 3 * jatekos;
         }
-        return i < this.#mezoLista.length - 3;
+        return i < szuksegesIndexekSzama;
     }
     
     #tanul()
@@ -491,6 +497,7 @@ class Jatekter
         do
         {
             i--;
+            console.log(this.#gepLepesei);
             this.#gepLepesei[i][0].torol(this.#gepLepesei[i][1]);
         }
         while (this.#gepLepesei[i][0].lepesek.length === 0);
