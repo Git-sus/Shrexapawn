@@ -2,21 +2,22 @@
   box-sizing: border-box;
 }
 
-main, .tabla {
+main, .minitabla {
   display: grid;
   width: 100%;
   max-width: 512px;
   grid-template-columns: repeat(3, 1fr);
 }
 
-main > div, .tabla > div{
+main > div, .minitabla > div{
   width: 100%;
   aspect-ratio: 1/1;
   font-size: 10vw;
   border: 1px solid black;
+  background-color: white;
 }
 
-main > div:nth-child(odd), .tabla > div:nth-child(odd){
+main > div:nth-child(odd), .minitabla > div:nth-child(odd){
   background-color: black;
   color: white;
 }
@@ -45,14 +46,14 @@ main > div:nth-child(odd), .tabla > div:nth-child(odd){
   background-color: red;
   width: 50%;
 }
-ol, .tabla > div{
+ol, .minitabla > div{
   font-size: 20pt;
 }
 .lepes{
   display: inline;
 }
 
-.tabla{
+.minitabla{
   /* display: none; */
   opacity: 0;
   position: absolute;
@@ -64,11 +65,16 @@ ol, .tabla > div{
   display: inline;
 }
 
-.eredmeny:hover > .tabla{
+.eredmeny:hover > .minitabla{
   /* display: block; */
   opacity: 1;
 }
-.eredmeny:hover > .tabla:hover{
+.eredmeny:hover > .minitabla:hover{
   /* display: block; */
   opacity: 0;
+}
+
+svg{
+  position: absolute;
+  width: 50px;
 }
