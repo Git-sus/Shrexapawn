@@ -371,56 +371,50 @@ class Jatekter
         return tmp;
     }
 
-    async #jatekosLep()
+    async #jatekosLep(self)
     {
-        
-        let func = (self) =>{
-            return new Promise(function(valasz){
-                // console.log(bruh);
-                $(window).on("elemValaszt", event => {
-                    if (self.#kor % 2 && !(self.#kattintottMezo === null && event.detail.babu === -1))
-                    { 
-                        if (self.#kattintottMezo === null && event.detail.babu === 1)
+        return new Promise(function(valasz){
+            // console.log(bruh);
+            $(window).on("elemValaszt", event => {
+                if (self.#kor % 2 && !(self.#kattintottMezo === null && event.detail.babu === -1))
+                { 
+                    if (self.#kattintottMezo === null && event.detail.babu === 1)
+                    {
+                        self.#kattintottMezo = event.detail;
+                        self.#kattintottMezo.divElem.css("border", "5px solid green");
+                    }
+                    else
+                    {
+                        if (self.#kattintottMezo.babu === 1 && event.detail.babu === 1)
                         {
-                            self.#kattintottMezo = event.detail;
+                            self.#kattintottMezo.divElem.css("border", "1px solid black");
+                            self.#kattintottMezo=event.detail;
                             self.#kattintottMezo.divElem.css("border", "5px solid green");
                         }
-                        else
+                        else if (self.#kattintottMezo.legalisLepes(event.detail) || self.#kattintottMezo.legalisTamadas(event.detail))
                         {
-                            if (self.#kattintottMezo.babu === 1 && event.detail.babu === 1)
+                            self.#kattintottMezo.divElem.css("border", "1px solid black");
+                            self.#kattintottMezo.csere(event.detail);
+                            self.#kor++;
+                            if (self.#ellenorzes(1))
                             {
-                                self.#kattintottMezo.divElem.css("border", "1px solid black");
-                                self.#kattintottMezo=event.detail;
-                                self.#kattintottMezo.divElem.css("border", "5px solid green");
+                                setTimeout(() => {
+                                    if(self.#gepLep()==-1)
+                                        valasz([-1, self.#gepLepesei])
+                                }, 1000);
                             }
-                            else if (self.#kattintottMezo.legalisLepes(event.detail) || self.#kattintottMezo.legalisTamadas(event.detail))
+                            else
                             {
-                                self.#kattintottMezo.divElem.css("border", "1px solid black");
-                                self.#kattintottMezo.csere(event.detail);
-                                self.#kor++;
-                                if (self.#ellenorzes(1))
-                                {
-                                    setTimeout(() => {
-                                        let a=self.#gepLep()
-                                        console.log(a);
-                                        if(a==-1)
-                                            valasz([-1, self.#gepLepesei])
-                                    }, 1000);
-                                }
-                                else
-                                {
-                                    console.warn("nyertél");
-                                    self.#tanul();
-                                    valasz([1, self.#gepLepesei])
-                                }
-                                self.#kattintottMezo = null;
+                                console.warn("nyertél");
+                                self.#tanul();
+                                valasz([1, self.#gepLepesei])
                             }
+                            self.#kattintottMezo = null;
                         }
                     }
-                })
+                }
             })
-        }
-        return await func(this)
+        })
     }
 
     
@@ -496,7 +490,7 @@ class Jatekter
     }
 
     async valasz(){
-        return this.#jatekosLep()
+        return await this.#jatekosLep(this)
     }
 
     destructor(){
