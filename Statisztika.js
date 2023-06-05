@@ -90,11 +90,17 @@ class Statisztika{
         let tmp=""
         for (let ix = 0; ix < 9; ix++) {
            tmp+=`<div>
-           ${element.gyufasDoboz.allas[ix]==0?"":element.gyufasDoboz.allas[ix]}
+           <img src="${(element.gyufasDoboz.allas[ix] === -1 ? "shrek.png" : element.gyufasDoboz.allas[ix] === 1 ? "donkey.png" : "")}">
            </div>`
         }
         return tmp+this.#nyilGeneral(element)
     }
+
+/*
+`<div>
+        <img src="${(this.#babu === -1 ? "shrek.png" : this.#babu === 1 ? "donkey.png" : "")}">
+        </div>`
+*/
 
     #nyilGeneral(element){
         let tmp=""

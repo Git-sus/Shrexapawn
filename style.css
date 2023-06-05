@@ -7,6 +7,11 @@ html{
   overflow: hidden;
 }
 
+img{
+  width: 100%;
+  max-width: 90px;
+}
+
 main{
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -87,6 +92,10 @@ ol, .minitabla > div{
 
 .minitabla{
   width: 128px;
+}
+
+.minitabla > div > img{
+  max-width: 30px;
 }
 
 .minitablaBox{

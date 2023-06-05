@@ -8,7 +8,9 @@ class Mezo
     {
         this.#index = index;
         this.#babu = Math.floor(index / 3) - 1;
-        $(szuloElem).append("<div>" + (this.#babu === 0 ? "" : this.#babu) + "</div>");
+        $(szuloElem).append(`<div>
+        <img src="${(this.#babu === -1 ? "shrek.png" : this.#babu === 1 ? "donkey.png" : "")}">
+        </div>`);
         this.#divElem = $(szuloElem).children("div:last-child");
         this.#divElem.on("click", () => this.esemenyTrigger());
     }
@@ -21,7 +23,9 @@ class Mezo
     set babu(babu)
     {
         this.#babu = babu;
-        this.#divElem.html((this.#babu === 0 ? "" : this.#babu));
+        this.#divElem.html(`<div>
+        <img src="${(this.#babu === -1 ? "shrek.png" : this.#babu === 1 ? "donkey.png" : "")}">
+        </div>`);
     }
 
     get index()
