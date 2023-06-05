@@ -84,6 +84,7 @@ ol, .minitabla > div{
   padding: 10px;
   user-select: none;
   width: 450px;
+  box-shadow: 5px 10px 15px hsl(0, 0%, 45%);
 }
 
 .minitablaBox > p{

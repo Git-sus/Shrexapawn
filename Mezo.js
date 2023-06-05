@@ -48,6 +48,7 @@ class Mezo
     {
         masikMezo.babu = this.babu;
         this.babu = 0;
+        new Audio("move.mp3").play()
     }
 
     esemenyTrigger()

@@ -25,22 +25,22 @@ class Statisztika{
         else
             this.#gepGyozelmekSzama++
         this.#gepLepesek.push(gepLepesek)
-        this.eredmenyMutat()
+        this.#eredmenyMutat()
     }
 
-    eredmenyMutat(){
-       this.eredmenysav()
-       this.eredmenyGepLista()
+    #eredmenyMutat(){
+       this.#eredmenysav()
+       this.#eredmenyGepLista()
     }
 
-    eredmenysav(){
+    #eredmenysav(){
         this.#jatekosElem.css("width", (this.#jatekosGyozelmekSzama / (this.#jatekosGyozelmekSzama + this.#gepGyozelmekSzama) * 100) + "%");
         this.#gepElem.css("width", (this.#gepGyozelmekSzama / (this.#jatekosGyozelmekSzama + this.#gepGyozelmekSzama) * 100) + "%");
         this.#jatekosElem.html(this.#jatekosGyozelmekSzama ? ("játékos: " + this.#jatekosGyozelmekSzama) : "");
         this.#gepElem.html(this.#gepGyozelmekSzama ? ("gép: " + this.#gepGyozelmekSzama) : "");
     }
 
-    eredmenyGepLista(){
+    #eredmenyGepLista(){
         let tmp=""
         this.#gepLepesek[this.#gepLepesek.length-1].forEach(element => {
             console.log("dsél",element[1]);
@@ -50,7 +50,7 @@ class Statisztika{
                     ${String.fromCharCode(97+Math.floor(element[0].lepesek[element[1]][1]/3))+(element[0].lepesek[element[1]][1]%3+1)}</div>
                 <div class="minitablaBox">
                     <div class="minitabla">
-                        ${this.minitablaGeneral(element)}
+                        ${this.#minitablaGeneral(element)}
                     </div>
                     <p>Valasztott szín: <span style="color:${this.#szinek[element[1]].kod}">${this.#szinek[element[1]].nev}</span></p>
                 </div>
@@ -67,23 +67,25 @@ class Statisztika{
                 else if(event.pageX-box.width()-40>0)
                     return event.pageX-40-box.width()
                 box.css("top", event.pageY-box.height()-40)    
-                return event.pageX-120
+                if(event.pageX+60-box.width()>0)
+                    return event.pageX+60-box.width()
+                return event.pageX-60
             }
         })
        
     }
 
-    minitablaGeneral(element){
+    #minitablaGeneral(element){
         let tmp=""
         for (let ix = 0; ix < 9; ix++) {
            tmp+=`<div>
            ${element[0].allas[ix]==0?"":element[0].allas[ix]}
            </div>`
         }
-        return tmp+this.nyilGeneral(element)
+        return tmp+this.#nyilGeneral(element)
     }
 
-    nyilGeneral(element){
+    #nyilGeneral(element){
         let tmp=""
         for (let ix = 0; ix < element[0].lepesek.length; ix++) {
             // console.log((element[0].lepesek[ix][0]%3)-(element[0].lepesek[ix][1]%3));
