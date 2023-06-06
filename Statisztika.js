@@ -96,17 +96,9 @@ class Statisztika{
         return tmp+this.#nyilGeneral(element)
     }
 
-/*
-`<div>
-        <img src="${(this.#babu === -1 ? "shrek.png" : this.#babu === 1 ? "donkey.png" : "")}">
-        </div>`
-*/
-
     #nyilGeneral(element){
         let tmp=""
         for (let ix = 0; ix < element.gyufasDoboz.lepesek.length; ix++) {
-            // console.log((element[0].lepesek[ix][0]%3)-(element[0].lepesek[ix][1]%3));
-            // console.log(((element[0].lepesek[ix][0]%3)-(element[0].lepesek[ix][1]%3)));
             let irany=(element.gyufasDoboz.lepesek[ix][0]%3)-(element.gyufasDoboz.lepesek[ix][1]%3)
             tmp+=`
             <svg style="top: ${Math.floor(element.gyufasDoboz.lepesek[ix][0]/3)*(128/3)+(128/6)}px;left: ${(element.gyufasDoboz.lepesek[ix][0]%3)*(128/3)+(-irany*128/6)}px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
