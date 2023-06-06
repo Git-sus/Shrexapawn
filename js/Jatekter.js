@@ -66,63 +66,22 @@ class Jatekter
 
     static rekurzivKereses(tomb, nth, kor){
         if(nth<tomb.length){
-            // console.log(nth);
             let babu=tomb[nth]
-            //console.log(kor, babu);
             if(babu!=0 && kor%2==(babu==-1?babu+1:babu)){
                 //console.log(babu==0);
-                if(babu!=0 && tomb[nth-3*babu]==0){//this.#babu !== 0 && masikMezo.babu === 0 && this.index - 3 * this.#babu === masikMezo.index;)
-                    let asd=tomb.slice()
-                    asd[nth-3*babu]=asd[nth]
-                    // console.log(asd[nth]);
-                    asd[nth]=0
-                    //console.log(asd);
-                    if(babu==-1 && celbaerte(-1, tomb) && celbaerte(1, tomb)){
-                        let talal=Jatekter.mind[kor/2-1].find(key=>{return key.allas.join("")==tomb.join("")})
-                        if(talal==undefined)
-                            Jatekter.mind[kor/2-1].push({allas:tomb,lepesek:[[nth,nth-3*babu]]})
-                        else   
-                            talal.lepesek.push([nth,nth-3*babu])
-                    }
-                    Jatekter.rekurzivKereses(asd,0, kor+1)
+                if(babu!=0 && tomb[nth-3*babu]==0){
+                    Jatekter.mentes(tomb, nth, babu, celbaerte, kor, 0);
                 }
-                if(babu!=0 && tomb[nth-3*babu+1]!=undefined && Math.floor((nth-3*babu+1)/3) == Math.floor(nth/3)-babu && tomb[nth-3*babu+1]==-babu){//masikMezo.babu === -this.#babu && (this.index - 3 * this.#babu === masikMezo.index + 1 
-                    //console.log(babu==0); // Math.floor(this.#index / 3) - this.#babu === Math.floor(masikMezo.index / 3);
-                    let asd=tomb.slice()
-                    asd[nth-3*babu+1]=asd[nth]
-                    // console.log(asd[nth]);
-                    asd[nth]=0
-                    //console.log(asd);
-                    if(babu==-1 && celbaerte(-1, tomb) && celbaerte(1, tomb)){
-                        let talal=Jatekter.mind[kor/2-1].find(key=>{return key.allas.join("")==tomb.join("")})
-                        if(talal==undefined)
-                            Jatekter.mind[kor/2-1].push({allas:tomb,lepesek:[[nth,nth-3*babu+1]]})
-                        else   
-                            talal.lepesek.push([nth,nth-3*babu+1])
-                    }
-                    Jatekter.rekurzivKereses(asd,0, kor+1)
+                if(babu!=0 && tomb[nth-3*babu+1]!=undefined && Math.floor((nth-3*babu+1)/3) == Math.floor(nth/3)-babu && tomb[nth-3*babu+1]==-babu){
+                    Jatekter.mentes(tomb, nth, babu, celbaerte, kor, 1);       
                 }
-                if(babu!=0 && tomb[nth-3*babu-1]!=undefined && Math.floor((nth-3*babu-1)/3) == Math.floor(nth/3)-babu && tomb[nth-3*babu-1]==-babu){//masikMezo.babu === -this.#babu && (this.index - 3 * this.#babu === masikMezo.index + 1 
-                    //console.log(babu==0); // Math.floor(this.#index / 3) - this.#babu === Math.floor(masikMezo.index / 3);
-                    let asd=tomb.slice()
-                    asd[nth-3*babu-1]=asd[nth]
-                    // console.log(asd[nth]);
-                    asd[nth]=0
-                    //console.log(asd);
-                    if(babu==-1 && celbaerte(-1, tomb) && celbaerte(1, tomb)){
-                        let talal=Jatekter.mind[kor/2-1].find(key=>{return key.allas.join("")==tomb.join("")})
-                        if(talal==undefined)
-                            Jatekter.mind[kor/2-1].push({allas:tomb,lepesek:[[nth,nth-3*babu-1]]})
-                        else   
-                            talal.lepesek.push([nth,nth-3*babu-1])
-                    }
-                    Jatekter.rekurzivKereses(asd,0, kor+1)
+                if(babu!=0 && tomb[nth-3*babu-1]!=undefined && Math.floor((nth-3*babu-1)/3) == Math.floor(nth/3)-babu && tomb[nth-3*babu-1]==-babu){
+                    Jatekter.mentes(tomb, nth, babu, celbaerte, kor, -1);           
                 }
             }
             Jatekter.rekurzivKereses(tomb,nth+1, kor)
         }
-        //console.log(Jatekter.mind);
-        return tomb
+        //return tomb
 
         function celbaerte(ki, tabla) {
             if(ki==0)
@@ -132,10 +91,23 @@ class Jatekter
             {
                 i++;
             }
-            //if(i<3)
-            //    console.log("i<3");
             return i>=3;
         }
+    }
+
+    static mentes(tomb, nth, babu, celbaerte, kor, irany) {
+        let asd = tomb.slice();
+        asd[nth - 3 * babu + irany] = asd[nth];
+        asd[nth] = 0;
+
+        if (babu == -1 && celbaerte(-1, tomb) && celbaerte(1, tomb)) {
+            let talal = Jatekter.mind[kor / 2 - 1].find(key => { return key.allas.join("") == tomb.join(""); });
+            if (talal == undefined)
+                Jatekter.mind[kor / 2 - 1].push({ allas: tomb, lepesek: [[nth, nth - 3 * babu + irany]] });
+            else
+                talal.lepesek.push([nth, nth - 3 * babu + irany]);
+        }
+        Jatekter.rekurzivKereses(asd, 0, kor + 1);
     }
 
     #mezoListaToString()
