@@ -162,6 +162,10 @@ span{
     main{
       grid-template-columns: 1fr;
     }
+
+    aside{
+      max-height: 265px;
+    }
 }
 
 @font-face {

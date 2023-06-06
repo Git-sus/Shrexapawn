@@ -16,16 +16,17 @@ class Jatekter
     #kor;
     #kattintottMezo;
 
+    static mindenLepes=[[],[],[]]
     static #gyufasDobozok = [];
     #mezoLista = [];
     #gepLepesei = [];
-    static mind=[[],[],[]]
+
     static{
         Jatekter.rekurzivKereses([-1,-1,-1,0,0,0,1,1,1],0, 1)
         Jatekter.#gyufasDobozok=[[],[],[]]
 
-        for (let ix = 0; ix < 3; ix++) {
-            Jatekter.mind[ix].forEach(element => {
+        for (let ix = 0; ix < this.mindenLepes.length; ix++) {
+            Jatekter.mindenLepes[ix].forEach(element => {
                 function multiDimensionalUnique(arr) {
                     var uniques = [];
                     var itemsFound = {};
@@ -68,20 +69,18 @@ class Jatekter
         if(nth<tomb.length){
             let babu=tomb[nth]
             if(babu!=0 && kor%2==(babu==-1?babu+1:babu)){
-                //console.log(babu==0);
                 if(babu!=0 && tomb[nth-3*babu]==0){
-                    Jatekter.mentes(tomb, nth, babu, celbaerte, kor, 0);
+                    mentes(tomb, nth, babu, celbaerte, kor, 0);
                 }
                 if(babu!=0 && tomb[nth-3*babu+1]!=undefined && Math.floor((nth-3*babu+1)/3) == Math.floor(nth/3)-babu && tomb[nth-3*babu+1]==-babu){
-                    Jatekter.mentes(tomb, nth, babu, celbaerte, kor, 1);       
+                    mentes(tomb, nth, babu, celbaerte, kor, 1);       
                 }
                 if(babu!=0 && tomb[nth-3*babu-1]!=undefined && Math.floor((nth-3*babu-1)/3) == Math.floor(nth/3)-babu && tomb[nth-3*babu-1]==-babu){
-                    Jatekter.mentes(tomb, nth, babu, celbaerte, kor, -1);           
+                    mentes(tomb, nth, babu, celbaerte, kor, -1);           
                 }
             }
             Jatekter.rekurzivKereses(tomb,nth+1, kor)
         }
-        //return tomb
 
         function celbaerte(ki, tabla) {
             if(ki==0)
@@ -93,21 +92,21 @@ class Jatekter
             }
             return i>=3;
         }
-    }
 
-    static mentes(tomb, nth, babu, celbaerte, kor, irany) {
-        let asd = tomb.slice();
-        asd[nth - 3 * babu + irany] = asd[nth];
-        asd[nth] = 0;
+        function mentes(tomb, nth, babu, celbaerte, kor, irany) {
+            let asd = tomb.slice();
+            asd[nth - 3 * babu + irany] = asd[nth];
+            asd[nth] = 0;
 
-        if (babu == -1 && celbaerte(-1, tomb) && celbaerte(1, tomb)) {
-            let talal = Jatekter.mind[kor / 2 - 1].find(key => { return key.allas.join("") == tomb.join(""); });
-            if (talal == undefined)
-                Jatekter.mind[kor / 2 - 1].push({ allas: tomb, lepesek: [[nth, nth - 3 * babu + irany]] });
-            else
-                talal.lepesek.push([nth, nth - 3 * babu + irany]);
+            if (babu == -1 && celbaerte(-1, tomb) && celbaerte(1, tomb)) {
+                let talal = Jatekter.mindenLepes[kor / 2 - 1].find(key => { return key.allas.join("") == tomb.join(""); });
+                if (talal == undefined)
+                    Jatekter.mindenLepes[kor / 2 - 1].push({ allas: tomb, lepesek: [[nth, nth - 3 * babu + irany]] });
+                else
+                    talal.lepesek.push([nth, nth - 3 * babu + irany]);
+            }
+            Jatekter.rekurzivKereses(asd, 0, kor + 1);
         }
-        Jatekter.rekurzivKereses(asd, 0, kor + 1);
     }
 
     #mezoListaToString()
@@ -181,7 +180,6 @@ class Jatekter
         {
             i++
         }
-        console.log("geplep");
         const rndLepesIndex = Math.floor(Math.random() * koronBeluliGyufasDobozok[i].lepesek.length);
         this.#gepLepesei.push({gyufasDoboz:koronBeluliGyufasDobozok[i], lepesIndex:rndLepesIndex});
         const rndLepes = koronBeluliGyufasDobozok[i].lepesek[rndLepesIndex];
@@ -240,7 +238,6 @@ class Jatekter
         do
         {
             i--;
-            console.log(this.#gepLepesei);
             this.#gepLepesei[i].gyufasDoboz.torol(this.#gepLepesei[i].lepesIndex);
         }
         while (this.#gepLepesei[i].gyufasDoboz.lepesek.length === 0);
