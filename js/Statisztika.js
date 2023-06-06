@@ -3,7 +3,7 @@ class Statisztika{
     
     #jatekosElem;
     #gepElem;
-    #bar;
+    #barElem;
     #listaElem;
     
     #gepGyozelmekSzama
@@ -16,7 +16,16 @@ class Statisztika{
     }
 
     constructor(){
-        this.torol()
+        this.#jatekosElem = $("#jatekos");
+        this.#gepElem = $("#gep");
+        this.#barElem = $("#bar");
+        this.#listaElem=$("ol");
+
+        this.#listaElem.html("")
+
+        this.#gepGyozelmekSzama=0
+        this.#jatekosGyozelmekSzama=0
+        this.#gepLepesek=[]
     }
 
     ujAdat(ki, gepLepesek){
@@ -28,26 +37,13 @@ class Statisztika{
         this.#eredmenyMutat()
     }
 
-    torol(){
-        this.#jatekosElem = $("#jatekos");
-        this.#gepElem = $("#gep");
-        this.#bar = $("#bar");
-        this.#listaElem=$("ol");
-
-        this.#listaElem.html("")
-
-        this.#gepGyozelmekSzama=0
-        this.#jatekosGyozelmekSzama=0
-        this.#gepLepesek=[]
-    }
-
     #eredmenyMutat(){
        this.#eredmenysav()
        this.#eredmenyGepLista()
     }
 
     #eredmenysav(){
-        this.#bar.css("grid-template-columns", `${this.#jatekosGyozelmekSzama}fr ${this.#gepGyozelmekSzama}fr`)
+        this.#barElem.css("grid-template-columns", `${this.#jatekosGyozelmekSzama}fr ${this.#gepGyozelmekSzama}fr`)
         this.#jatekosElem.html(this.#jatekosGyozelmekSzama ? ("játékos: " + this.#jatekosGyozelmekSzama) : "");
         this.#gepElem.html(this.#gepGyozelmekSzama ? ("gép: " + this.#gepGyozelmekSzama) : "");
     }

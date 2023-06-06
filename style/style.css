@@ -25,7 +25,8 @@ h1{
   background-color: black;
   color: white;
   font-size: 10vw;
-  
+  text-transform: uppercase;
+  font-family: "shrek";
   display: flex;
   justify-content: center;
   align-items: center;
