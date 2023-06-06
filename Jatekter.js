@@ -350,7 +350,7 @@ class Jatekter
         // ]);
         //console.log(this.#gyufasDobozok);
 
-        Jatekter.a([-1,-1,-1,0,0,0,1,1,1],0, 1)
+        Jatekter.rekurzivKereses([-1,-1,-1,0,0,0,1,1,1],0, 1)
         Jatekter.#gyufasDobozok=[[],[],[]]
 
         for (let ix = 0; ix < 3; ix++) {
@@ -393,7 +393,7 @@ class Jatekter
 
     
 
-    static a(tomb, nth, kor){
+    static rekurzivKereses(tomb, nth, kor){
         if(nth<tomb.length){
             // console.log(nth);
             let babu=tomb[nth]
@@ -413,7 +413,7 @@ class Jatekter
                         else   
                             talal.lepesek.push([nth,nth-3*babu])
                     }
-                    Jatekter.a(asd,0, kor+1)
+                    Jatekter.rekurzivKereses(asd,0, kor+1)
                 }
                 if(babu!=0 && tomb[nth-3*babu+1]!=undefined && Math.floor((nth-3*babu+1)/3) == Math.floor(nth/3)-babu && tomb[nth-3*babu+1]==-babu){//masikMezo.babu === -this.#babu && (this.index - 3 * this.#babu === masikMezo.index + 1 
                     console.log(babu==0); // Math.floor(this.#index / 3) - this.#babu === Math.floor(masikMezo.index / 3);
@@ -429,7 +429,7 @@ class Jatekter
                         else   
                             talal.lepesek.push([nth,nth-3*babu+1])
                     }
-                    Jatekter.a(asd,0, kor+1)
+                    Jatekter.rekurzivKereses(asd,0, kor+1)
                 }
                 if(babu!=0 && tomb[nth-3*babu-1]!=undefined && Math.floor((nth-3*babu-1)/3) == Math.floor(nth/3)-babu && tomb[nth-3*babu-1]==-babu){//masikMezo.babu === -this.#babu && (this.index - 3 * this.#babu === masikMezo.index + 1 
                     console.log(babu==0); // Math.floor(this.#index / 3) - this.#babu === Math.floor(masikMezo.index / 3);
@@ -445,10 +445,10 @@ class Jatekter
                         else   
                             talal.lepesek.push([nth,nth-3*babu-1])
                     }
-                    Jatekter.a(asd,0, kor+1)
+                    Jatekter.rekurzivKereses(asd,0, kor+1)
                 }
             }
-            Jatekter.a(tomb,nth+1, kor)
+            Jatekter.rekurzivKereses(tomb,nth+1, kor)
         }
         console.log(Jatekter.mind);
         return tomb
