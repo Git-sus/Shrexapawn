@@ -90,7 +90,7 @@ class Statisztika{
         let tmp=""
         for (let ix = 0; ix < 9; ix++) {
            tmp+=`<div>
-           <img src="${(element.gyufasDoboz.allas[ix] === -1 ? "shrek.png" : element.gyufasDoboz.allas[ix] === 1 ? "donkey.png" : "")}">
+           <img src="${(element.gyufasDoboz.allas[ix] === -1 ? "./img/shrek.png" : element.gyufasDoboz.allas[ix] === 1 ? "./img/donkey.png" : "")}">
            </div>`
         }
         return tmp+this.#nyilGeneral(element)

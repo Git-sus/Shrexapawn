@@ -9,7 +9,7 @@ class Mezo
         this.#index = index;
         this.#babu = Math.floor(index / 3) - 1;
         $(szuloElem).append(`<div>
-        <img src="${(this.#babu === -1 ? "shrek.png" : this.#babu === 1 ? "donkey.png" : "")}">
+        <img src="${(this.#babu === -1 ? "./img/shrek.png" : this.#babu === 1 ? "./img/donkey.png" : "")}">
         </div>`);
         this.#divElem = $(szuloElem).children("div:last-child");
         this.#divElem.on("click", () => this.esemenyTrigger());
@@ -24,7 +24,7 @@ class Mezo
     {
         this.#babu = babu;
         this.#divElem.html(`<div>
-        <img src="${(this.#babu === -1 ? "shrek.png" : this.#babu === 1 ? "donkey.png" : "")}">
+        <img src="${(this.#babu === -1 ? "./img/shrek.png" : this.#babu === 1 ? "./img/donkey.png" : "")}">
         </div>`);
     }
 
@@ -52,7 +52,7 @@ class Mezo
     {
         masikMezo.babu = this.babu;
         this.babu = 0;
-        new Audio("move.mp3").play()
+        new Audio("style/move.mp3").play()
     }
 
     esemenyTrigger()

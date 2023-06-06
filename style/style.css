@@ -7,6 +7,12 @@ html{
   overflow: hidden;
 }
 
+h1{
+  text-transform: uppercase;
+  text-align: center;
+  font-family: "shrek";
+}
+
 #betolt{
   width: 100vw;
   height: 100vh;
@@ -155,4 +161,9 @@ span{
     main{
       grid-template-columns: 1fr;
     }
+}
+
+@font-face {
+  font-family: "shrek";
+  src: url("Shrek.ttf");
 }
