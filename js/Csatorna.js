@@ -2,21 +2,21 @@ import Jatekter from "./Jatekter.js";
 import Statisztika from "./Statisztika.js";
 
 class Csatorna{
-    #Jatekter
-    #Statisztika
+    #jatekter
+    #statisztika
 
     constructor(){
         
-        this.#Statisztika = new Statisztika();
+        this.#statisztika = new Statisztika();
         this.jatek()
     }
 
     jatek(){
-        this.#Jatekter= new Jatekter()
-        this.#Jatekter.valasz().then(adat => {
-            this.#Statisztika.ujAdat(adat.ki,adat.gepLepesei)
+        this.#jatekter= new Jatekter()
+        this.#jatekter.valasz().then(adat => {
+            this.#statisztika.ujAdat(adat.ki,adat.gepLepesei)
             setTimeout(() => {
-                this.#Jatekter.destructor()
+                this.#jatekter.destructor()
                 this.jatek()
             }, 2000);
         })
