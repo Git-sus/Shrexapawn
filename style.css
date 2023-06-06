@@ -17,12 +17,15 @@ html{
   vertical-align: middle;
   background-color: black;
   color: white;
-  font-size: 128px;
+  font-size: 10vw;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 img{
-  width: 100%;
-  max-width: 90px;
+  width: 90%;
 }
 
 main{
