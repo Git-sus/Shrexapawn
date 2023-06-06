@@ -21,335 +21,6 @@ class Jatekter
     #gepLepesei = [];
     static mind=[[],[],[]]
     static{
-
-         //2. indexű lépések
-
-        //  Jatekter.#gyufasDobozok.push([
-        //     new GyufasDoboz([
-        //         -1, -1, -1,
-        //          1,  0,  0,
-        //          0,  1,  1
-        //     ], [
-        //         [1, 3],
-        //         [1, 4],
-        //         [2, 5]
-        //     ]),
-        //     new GyufasDoboz([
-        //         -1, -1, -1,
-        //          0,  0,  1,
-        //          1,  1,  0
-        //     ], [
-        //         [0, 3],
-        //         [1, 4],
-        //         [1, 5]
-        //     ]),
-        //     new GyufasDoboz([
-        //         -1, -1, -1,
-        //          0,  1,  0,
-        //          1,  0,  1
-        //     ], [
-        //         [0, 3],
-        //         [0, 4],
-        //         [2, 4],
-        //         [2, 5]
-        //     ])
-        // ]);
-
-        // //4. indexű lépések
-        
-        // Jatekter.#gyufasDobozok.push([
-        //     new GyufasDoboz([
-        //         -1,  0, -1,
-        //         -1,  1,  0,
-        //          0,  0,  1
-        //     ], [
-        //         [0, 4],
-        //         [2, 4],
-        //         [2, 5],
-        //         [3, 6]
-        //     ]),
-        //     new GyufasDoboz([
-        //         -1,  0, -1,
-        //          0,  1, -1,
-        //          1,  0,  0
-        //     ], [
-        //         [0, 3],
-        //         [0, 4],
-        //         [2, 4],
-        //         [5, 8]
-        //     ]),
-        //     new GyufasDoboz([
-        //          0, -1, -1,
-        //          1, -1,  0,
-        //          0,  0,  1
-        //     ], [
-        //         [1, 3],
-        //         [2, 5],
-        //         [4, 7],
-        //         [4, 8]
-        //     ]),
-        //     new GyufasDoboz([
-        //         -1, -1,  0,
-        //          0, -1,  1,
-        //          1,  0,  0
-        //     ], [
-        //         [0, 3],
-        //         [1, 5],
-        //         [4, 6],
-        //         [4, 7]
-        //     ]),
-        //     new GyufasDoboz([
-        //         -1,  0, -1,
-        //          1,  1,  0,
-        //          0,  1,  0
-        //     ], [
-        //         [0, 4],
-        //         [2, 4],
-        //         [2, 5]
-        //     ]),
-        //     new GyufasDoboz([
-        //         -1,  0, -1,
-        //          0,  1,  1,
-        //          0,  1,  0
-        //     ], [
-        //         [0, 3],
-        //         [0, 4],
-        //         [2, 4]
-        //     ]),
-        //     new GyufasDoboz([
-        //         -1, -1,  0,
-        //          1,  0,  1,
-        //          0,  0,  1
-        //     ], [
-        //         [1, 3],
-        //         [1, 4],
-        //         [1, 5]
-        //     ]),
-        //     new GyufasDoboz([
-        //          0, -1, -1,
-        //          1,  0,  1,
-        //          1,  0,  0
-        //     ], [
-        //         [1, 3],
-        //         [1, 4],
-        //         [1, 5]
-        //     ]),
-        //     new GyufasDoboz([
-        //          0, -1, -1,
-        //          0, -1,  1,
-        //          1,  0,  0
-        //     ], [
-        //         [1, 5],
-        //         [4, 6],
-        //         [4, 7]
-        //     ]),
-        //     new GyufasDoboz([
-        //         -1, -1,  0,
-        //          1, -1,  0,
-        //          0,  0,  1
-        //     ], [
-        //         [1, 3],
-        //         [4, 7],
-        //         [4, 8]
-        //     ]),
-        //     new GyufasDoboz([
-        //          0, -1, -1,
-        //         -1,  1,  1,
-        //          1,  0,  0
-        //     ], [
-        //         [1, 5],
-        //         [2, 4]
-        //     ]),
-        //     new GyufasDoboz([
-        //         -1, -1,  0,
-        //          1,  1, -1,
-        //          0,  0,  1
-        //     ], [
-        //         [0, 4],
-        //         [1, 3]
-        //     ]),
-        //     new GyufasDoboz([
-        //         -1,  0, -1,
-        //         -1,  0,  1,
-        //          0,  1,  0
-        //     ], [
-        //         [3, 6],
-        //         [3, 7]
-        //     ]),
-        //     new GyufasDoboz([
-        //         -1,  0, -1,
-        //          1,  0, -1,
-        //          0,  1,  0
-        //     ], [
-        //         [5, 7],
-        //         [5, 8]
-        //     ]),
-        //     new GyufasDoboz([
-        //          0, -1, -1,
-        //          0,  1,  0,
-        //          0,  0,  1
-        //     ], [
-        //         [2, 4],
-        //         [2, 5]
-        //     ]),
-        //     new GyufasDoboz([
-        //         -1, -1,  0,
-        //          0,  1,  0,
-        //          1,  0,  0
-        //     ], [
-        //         [0, 3],
-        //         [0, 4]
-        //     ]),
-        //     new GyufasDoboz([
-        //          0, -1, -1,
-        //          0,  1,  0,
-        //          1,  0,  0
-        //     ], [
-        //         [2, 4],
-        //         [2, 5]
-        //     ]),
-        //     new GyufasDoboz([
-        //         -1, -1,  0,
-        //          0,  1,  0,
-        //          0,  0,  1
-        //     ], [
-        //         [0, 3],
-        //         [0, 4]
-        //     ]),
-        //     new GyufasDoboz([
-        //         -1,  0, -1,
-        //          1,  0,  0,
-        //          0,  0,  1
-        //     ], [
-        //         [2, 5]
-        //     ]),
-        //     new GyufasDoboz([
-        //         -1,  0, -1,
-        //          0,  0,  1,
-        //          1,  0,  0
-        //     ], [
-        //         [0, 3]
-        //     ])
-        // ]);
-
-        // //6. indexű lépések
-
-        // Jatekter.#gyufasDobozok.push([
-        //     new GyufasDoboz([
-        //          0,  0, -1,
-        //         -1, -1,  1,
-        //          0,  0,  0
-        //     ], [
-        //         [3, 6],
-        //         [4, 7]
-        //     ]),
-        //     new GyufasDoboz([
-        //          -1,  0,  0,
-        //          1, -1, -1,
-        //          0,  0,  0
-        //     ], [
-        //         [4, 7],
-        //         [5, 8]
-        //     ]),
-        //     new GyufasDoboz([
-        //         -1,  0,  0,
-        //          1,  1,  1,
-        //          0,  0,  0
-        //     ], [
-        //         [0, 4]
-        //     ]),
-        //     new GyufasDoboz([
-        //          0,  0, -1,
-        //          1,  1,  1,
-        //          0,  0,  0
-        //     ], [
-        //         [2, 4]
-        //     ]),
-        //     new GyufasDoboz([
-        //          0, -1,  0,
-        //         -1,  1,  1,
-        //          0,  0,  0
-        //     ], [
-        //         [1, 5],
-        //         [3, 6]
-        //     ]),
-        //     new GyufasDoboz([
-        //          0, -1,  0,
-        //          1,  1, -1,
-        //          0,  0,  0
-        //     ], [
-        //         [1, 3],
-        //         [5, 8]
-        //     ]),
-        //     new GyufasDoboz([
-        //         -1,  0,  0,
-        //         -1, -1,  1,
-        //          0,  0,  0
-        //     ], [
-        //         [3, 6],
-        //         [4, 7]
-        //     ]),
-        //     new GyufasDoboz([
-        //          0,  0, -1,
-        //         -1,  1,  0,
-        //          0,  0,  0
-        //     ], [
-        //         [2, 4],
-        //         [2, 5],
-        //         [3, 6]
-        //     ]),
-        //     new GyufasDoboz([
-        //         -1,  0,  0,
-        //          0,  1, -1,
-        //          0,  0,  0
-        //     ], [
-        //         [0, 3],
-        //         [0, 4],
-        //         [5, 8]
-        //     ]),
-        //     new GyufasDoboz([
-        //          0, -1,  0,
-        //          1, -1,  0,
-        //          0,  0,  0
-        //     ], [
-        //         [1, 3],
-        //         [4, 7]
-        //     ]),
-        //     new GyufasDoboz([
-        //          0, -1,  0,
-        //          0, -1,  1,
-        //          0,  0,  0
-        //     ], [
-        //         [1, 5],
-        //         [4, 7]
-        //     ]),
-        //     new GyufasDoboz([
-        //         -1,  0,  0,
-        //         -1,  1,  0,
-        //          0,  0,  0
-        //     ], [
-        //         [0, 4],
-        //         [3, 6]
-        //     ]),
-        //     new GyufasDoboz([
-        //          0,  0, -1,
-        //          0,  1, -1,
-        //          0,  0,  0
-        //     ], [
-        //         [2, 4],
-        //         [5, 8]
-        //     ]),
-        //     new GyufasDoboz([
-        //          0,  0, -1,
-        //          1, -1, -1,
-        //          0,  0,  0
-        //    ], [
-        //        [4, 7],
-        //        [5, 8]
-        //    ])
-        // ]);
-        //console.log(this.#gyufasDobozok);
-
         Jatekter.rekurzivKereses([-1,-1,-1,0,0,0,1,1,1],0, 1)
         Jatekter.#gyufasDobozok=[[],[],[]]
 
@@ -366,14 +37,14 @@ class Jatekter
                     }
                     return uniques;
                 }
-                console.log(multiDimensionalUnique(element.lepesek));
+                //console.log(multiDimensionalUnique(element.lepesek));
                 Jatekter.#gyufasDobozok[ix].push(new GyufasDoboz(element.allas,multiDimensionalUnique(element.lepesek)))    
             });
         }
-        console.log(Jatekter.#gyufasDobozok);
+        
         $("#betolt").fadeTo(1000, 0, function(){
             $(this).hide() }); 
-    }
+        }
     
     constructor()
     {
@@ -405,8 +76,8 @@ class Jatekter
                     asd[nth-3*babu]=asd[nth]
                     // console.log(asd[nth]);
                     asd[nth]=0
-                    console.log(asd);
-                    if(babu==-1 && celbaerte(-1, asd) && celbaerte(1, asd)){
+                    //console.log(asd);
+                    if(babu==-1 && celbaerte(-1, tomb) && celbaerte(1, tomb)){
                         let talal=Jatekter.mind[kor/2-1].find(key=>{return key.allas.join("")==tomb.join("")})
                         if(talal==undefined)
                             Jatekter.mind[kor/2-1].push({allas:tomb,lepesek:[[nth,nth-3*babu]]})
@@ -416,13 +87,13 @@ class Jatekter
                     Jatekter.rekurzivKereses(asd,0, kor+1)
                 }
                 if(babu!=0 && tomb[nth-3*babu+1]!=undefined && Math.floor((nth-3*babu+1)/3) == Math.floor(nth/3)-babu && tomb[nth-3*babu+1]==-babu){//masikMezo.babu === -this.#babu && (this.index - 3 * this.#babu === masikMezo.index + 1 
-                    console.log(babu==0); // Math.floor(this.#index / 3) - this.#babu === Math.floor(masikMezo.index / 3);
+                    //console.log(babu==0); // Math.floor(this.#index / 3) - this.#babu === Math.floor(masikMezo.index / 3);
                     let asd=tomb.slice()
                     asd[nth-3*babu+1]=asd[nth]
                     // console.log(asd[nth]);
                     asd[nth]=0
-                    console.log(asd);
-                    if(babu==-1 && celbaerte(-1, asd) && celbaerte(1, asd)){
+                    //console.log(asd);
+                    if(babu==-1 && celbaerte(-1, tomb) && celbaerte(1, tomb)){
                         let talal=Jatekter.mind[kor/2-1].find(key=>{return key.allas.join("")==tomb.join("")})
                         if(talal==undefined)
                             Jatekter.mind[kor/2-1].push({allas:tomb,lepesek:[[nth,nth-3*babu+1]]})
@@ -432,13 +103,13 @@ class Jatekter
                     Jatekter.rekurzivKereses(asd,0, kor+1)
                 }
                 if(babu!=0 && tomb[nth-3*babu-1]!=undefined && Math.floor((nth-3*babu-1)/3) == Math.floor(nth/3)-babu && tomb[nth-3*babu-1]==-babu){//masikMezo.babu === -this.#babu && (this.index - 3 * this.#babu === masikMezo.index + 1 
-                    console.log(babu==0); // Math.floor(this.#index / 3) - this.#babu === Math.floor(masikMezo.index / 3);
+                    //console.log(babu==0); // Math.floor(this.#index / 3) - this.#babu === Math.floor(masikMezo.index / 3);
                     let asd=tomb.slice()
                     asd[nth-3*babu-1]=asd[nth]
                     // console.log(asd[nth]);
                     asd[nth]=0
-                    console.log(asd);
-                    if(babu==-1 && celbaerte(-1, asd) && celbaerte(1, asd)){
+                    //console.log(asd);
+                    if(babu==-1 && celbaerte(-1, tomb) && celbaerte(1, tomb)){
                         let talal=Jatekter.mind[kor/2-1].find(key=>{return key.allas.join("")==tomb.join("")})
                         if(talal==undefined)
                             Jatekter.mind[kor/2-1].push({allas:tomb,lepesek:[[nth,nth-3*babu-1]]})
@@ -450,7 +121,7 @@ class Jatekter
             }
             Jatekter.rekurzivKereses(tomb,nth+1, kor)
         }
-        console.log(Jatekter.mind);
+        //console.log(Jatekter.mind);
         return tomb
 
         function celbaerte(ki, tabla) {
@@ -461,8 +132,8 @@ class Jatekter
             {
                 i++;
             }
-            if(i<3)
-                console.log("i<3");
+            //if(i<3)
+            //    console.log("i<3");
             return i>=3;
         }
     }
