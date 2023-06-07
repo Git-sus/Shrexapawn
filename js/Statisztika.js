@@ -109,7 +109,6 @@ class Statisztika{
             </svg>
              `
         }
-        //<line x1="50" y1="50" x2="400" y2="400" stroke="#000" 
         return tmp
     }
 }

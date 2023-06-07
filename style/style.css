@@ -4,7 +4,7 @@
 }
 
 html{
-  overflow: hidden;
+  overflow-x: hidden;
   background-color: rgb(194, 241, 194);
 }
 
@@ -12,6 +12,44 @@ h1{
   text-transform: uppercase;
   text-align: center;
   font-family: "shrek";
+}
+
+sup{
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: pointer;
+}
+
+#info{
+  position: absolute;
+  top: 0;
+  background-color: rgb(255, 242, 201);
+  margin: 30px;
+  display: none;
+}
+
+#info > div{
+  display: flex;
+  grid-template-columns: auto ;
+}
+
+#info > div > *{
+  background-color: hsl(46, 100%, 85%);
+  margin: 0;
+  padding: 8px 12px;
+}
+
+#info > div > h2{
+  width: 100%;
+}
+
+#X{
+  text-align: right;
+  cursor: pointer;
+  color: rgb(179, 38, 38);
+}
+
+#info > p{
+  padding: 0 12px;
 }
 
 #betolt{

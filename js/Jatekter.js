@@ -132,14 +132,12 @@ class Jatekter
                     {
                         if (self.#kattintottMezo.babu === 1 && event.detail.babu === 1)
                         {
-                            //self.#kattintottMezo.divElem.css("border", "1px solid black");
                             self.#kattintottMezo.divElem.removeAttr("id", "kivalasztMezo");
                             self.#kattintottMezo=event.detail;
                             self.#kattintottMezo.divElem.attr("id", "kivalasztMezo");
                         }
                         else if (self.#kattintottMezo.legalisLepes(event.detail) || self.#kattintottMezo.legalisTamadas(event.detail))
                         {
-                            //self.#kattintottMezo.divElem.css("border", "1px solid black");
                             self.#kattintottMezo.divElem.removeAttr("id", "kivalasztMezo");
                             self.#kattintottMezo.csere(event.detail);
                             self.#kor++;
@@ -154,7 +152,6 @@ class Jatekter
                             {
                                 let tmp=[]
                                 self.#gepLepesei.forEach(element => {
-                                    //element=element.slice()
                                     tmp.push({gyufasDoboz:new GyufasDoboz(element.gyufasDoboz.allas,element.gyufasDoboz.lepesek.slice()),lepesIndex: element.lepesIndex})
                                 });
                                 console.warn("nyertél");

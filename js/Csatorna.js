@@ -6,7 +6,7 @@ class Csatorna{
     #statisztika
 
     constructor(){
-        
+        this.#info()
         this.#statisztika = new Statisztika();
         this.jatek()
     }
@@ -19,6 +19,19 @@ class Csatorna{
                 this.#jatekter.destructor()
                 this.jatek()
             }, 2000);
+        })
+    }
+
+    #info(){
+        $("sup").eq(0).on("click",()=>{
+            $("#info").fadeTo(1000, 1, function(){
+                $(this).show() 
+            }); 
+        })
+        $("#X").on("click",()=>{
+            $("#info").fadeTo(1000, 0, function(){
+                $(this).hide() 
+            }); 
         })
     }
 }
