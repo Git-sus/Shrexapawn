@@ -14,7 +14,7 @@ h1{
   font-family: "shrek";
 }
 
-sup{
+h1 > sup{
   font-family: Arial, Helvetica, sans-serif;
   cursor: pointer;
 }
